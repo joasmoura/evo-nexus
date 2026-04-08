@@ -7,7 +7,7 @@ description: "Monthly community report — aggregates Discord and WhatsApp activ
 
 Rotina mensal que analisa toda a atividade do Discord e WhatsApp do mês e gera um relatório HTML completo com tendências, insights e recomendações.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 
@@ -179,8 +179,8 @@ Criar o diretório `03 Comunidade/reports/monthly/` se não existir.
 **Destaques:** {N} features, {N} bugs, {N} docs gaps
 ```
 
-### Notificar no Telegram
+### Notify via Telegram
 
-Ao finalizar, enviar resumo curto no Telegram para o usuário:
-- Usar o MCP do Telegram: `reply(chat_id="YOUR_CHAT_ID", text="...")`
-- Formato: emoji + "Community Monthly" + MAM + sentimento + destaques (2-3 linhas)
+Upon completion, send a short summary via Telegram to the user:
+- Use the Telegram MCP: `reply(chat_id="YOUR_CHAT_ID", text="...")`
+- Format: emoji + "Community Monthly" + MAM + sentiment + highlights (2-3 lines)

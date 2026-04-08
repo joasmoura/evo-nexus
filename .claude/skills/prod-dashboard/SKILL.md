@@ -7,7 +7,7 @@ description: "Daily consolidation dashboard — reads outputs from all routines 
 
 Rotina de consolidação que lê os outputs das outras rotinas e gera um HTML dashboard unificado com visão geral de todas as áreas do negócio.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 **IMPORTANTE:** Esta rotina NÃO busca dados novos. Ela lê os outputs já gerados pelas outras rotinas do dia/semana e consolida tudo numa view única.
 
@@ -143,9 +143,9 @@ Apresentar resumo curto:
 **Alertas:** {N} pontos de atenção
 ```
 
-### Notificar no Telegram
+### Notify via Telegram
 
-Ao finalizar, enviar resumo curto no Telegram para o usuário:
-- Usar o MCP do Telegram: `reply(chat_id="YOUR_CHAT_ID", text="...")`
-- Formato: emoji + nome da rotina + health status de cada área (1-3 linhas)
-- Se não teve novidades, enviar mesmo assim com "sem novidades"
+Upon completion, send a short summary via Telegram to the user:
+- Use the Telegram MCP: `reply(chat_id="YOUR_CHAT_ID", text="...")`
+- Format: emoji + routine name + health status of each area (1-3 lines)
+- If there were no updates, send anyway with "no updates"

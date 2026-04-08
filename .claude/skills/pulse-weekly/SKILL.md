@@ -7,7 +7,7 @@ description: "Weekly community analysis report — aggregates Discord AND WhatsA
 
 Rotina semanal que analisa a atividade do Discord e WhatsApp dos últimos 7 dias e gera um relatório HTML completo.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 

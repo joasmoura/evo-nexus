@@ -7,7 +7,7 @@ description: "Weekly open source growth report — queries licensing API for 7d 
 
 Rotina semanal que analisa tendências de crescimento do open source.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 

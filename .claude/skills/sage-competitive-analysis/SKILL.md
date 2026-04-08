@@ -7,7 +7,7 @@ description: "Analyze competitive landscape and market positioning. Use when use
 
 Skill para analisar o cenário competitivo da Evolution Foundation e identificar oportunidades de posicionamento.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 

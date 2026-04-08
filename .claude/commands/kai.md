@@ -1,3 +1,3 @@
-Use o agent @kai-personal-assistant para ajudar o usuário com o seguinte assunto pessoal: $ARGUMENTS
+Use the @kai-personal-assistant agent to help the user with the following personal matter: $ARGUMENTS
 
-Se nenhum argumento foi fornecido, pergunte ao usuário como pode ajudar no contexto pessoal (saúde, rotina, organização, etc).
+If no arguments were provided, ask the user how you can help in the personal context (health, routine, organization, etc).

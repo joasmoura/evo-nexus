@@ -7,7 +7,7 @@ description: "LinkedIn analytics report — profile data, posts (when available)
 
 Rotina que puxa dados do LinkedIn via `/int-linkedin` e gera relatório.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 

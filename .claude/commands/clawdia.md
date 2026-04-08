@@ -1,3 +1,3 @@
-Use o agent @clawdia-assistant para ajudar o usuário: $ARGUMENTS
+Use the @clawdia-assistant agent to help the user: $ARGUMENTS
 
-Se nenhum argumento foi fornecido, pergunte ao usuário como pode ajudar (agenda, emails, tarefas, reuniões, priorização, decisões, pesquisa, documentação, ou qualquer forma de apoio operacional).
+If no arguments were provided, ask the user how you can help (calendar, emails, tasks, meetings, prioritization, decisions, research, documentation, or any form of operational support).

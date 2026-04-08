@@ -7,7 +7,7 @@ description: "Daily community pulse report — reads Discord AND WhatsApp messag
 
 Rotina diária que lê as mensagens do Discord e WhatsApp das últimas 24h e gera um relatório HTML de saúde da comunidade.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 

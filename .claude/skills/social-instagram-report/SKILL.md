@@ -7,7 +7,7 @@ description: "Instagram analytics report — queries profile stats, recent posts
 
 Rotina que puxa dados do Instagram via `/int-instagram` e gera relatório HTML de performance.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 

@@ -1,3 +1,3 @@
-Use o agent @mentor-courses para ajudar o usuário com o seguinte assunto de educação/cursos: $ARGUMENTS
+Use the @mentor-courses agent to help the user with the following education/courses matter: $ARGUMENTS
 
-Se nenhum argumento foi fornecido, pergunte ao usuário como pode ajudar no contexto educacional (trilhas, módulos, aulas, material didático, plataforma de cursos, etc).
+If no arguments were provided, ask the user how you can help in the educational context (learning paths, modules, lessons, didactic material, course platform, etc).

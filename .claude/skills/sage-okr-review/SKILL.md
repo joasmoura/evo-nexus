@@ -7,7 +7,7 @@ description: "Review and track OKRs progress. Use when user says 'como tão os O
 
 Skill para revisar, atualizar ou definir OKRs trimestrais da empresa.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 

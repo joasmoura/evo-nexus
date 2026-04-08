@@ -1,3 +1,3 @@
-Use o agent @flux-financeiro para ajudar o usuário com o seguinte assunto financeiro: $ARGUMENTS
+Use the @flux-financeiro agent to help the user with the following financial matter: $ARGUMENTS
 
-Se nenhum argumento foi fornecido, pergunte ao usuário como pode ajudar no contexto financeiro (fluxo de caixa, métricas, contas a pagar/receber, relatórios, etc).
+If no arguments were provided, ask the user how you can help in the financial context (cash flow, metrics, accounts payable/receivable, reports, etc).

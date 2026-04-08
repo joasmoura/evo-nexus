@@ -7,7 +7,7 @@ description: "Weekly trends analysis — compares community, GitHub, and financi
 
 Rotina que compara métricas de comunidade, GitHub e financeiro semana a semana pra detectar padrões, riscos e oportunidades.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fontes de dados
 

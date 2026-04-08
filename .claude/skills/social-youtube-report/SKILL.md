@@ -7,7 +7,7 @@ description: "YouTube analytics report — queries channel stats, recent videos,
 
 Rotina que puxa dados do YouTube via `/int-youtube` e gera relatório HTML de performance do canal.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 

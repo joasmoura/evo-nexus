@@ -325,7 +325,7 @@ Common update triggers:
 - Does not build a content strategy or define topic clusters — see **social-content-strategy** for strategic planning
 - Does not analyze performance or metrics — see **social-performance-analyzer** for analytics
 - Does not schedule or plan a content calendar — see **social-content-calendar** for scheduling
-- Does not execute code or access external APIs sem integração de publicação automática — salvar como rascunho
+- Does not execute code or access external APIs without automated publishing integration — save as draft
 - Does not make strategic recommendations — this skill captures identity and preferences only
 
 ## See also

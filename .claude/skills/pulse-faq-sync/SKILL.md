@@ -7,7 +7,7 @@ description: "Sync and update the community FAQ from Discord conversations, What
 
 Rotina que mantém o FAQ da comunidade sempre atualizado, alimentado por perguntas do Discord, WhatsApp e issues do GitHub.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Arquivo principal
 

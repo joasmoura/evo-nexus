@@ -7,7 +7,7 @@ description: "Generate weekly strategy digest consolidating financial, product, 
 
 Rotina semanal que consolida dados de todas as áreas numa visão estratégica pra tomada de decisão.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 
@@ -98,9 +98,9 @@ Apresentar versão curta e direta.
 - **Conectar os pontos** — o valor do digest é cruzar áreas, não repetir relatórios individuais
 
 
-### Notificar no Telegram
+### Notify via Telegram
 
-Ao finalizar, enviar resumo curto no Telegram para o usuário:
-- Usar o MCP do Telegram: `reply(chat_id="YOUR_CHAT_ID", text="...")`
-- Formato: emoji + nome da rotina + resultado principal (1-3 linhas)
-- Se a rotina não teve novidades, enviar mesmo assim com "sem novidades"
+Upon completion, send a short summary via Telegram to the user:
+- Use the Telegram MCP: `reply(chat_id="YOUR_CHAT_ID", text="...")`
+- Format: emoji + routine name + main result (1-3 lines)
+- If the routine had no updates, send anyway with "no updates"

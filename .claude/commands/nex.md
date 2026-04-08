@@ -1,3 +1,3 @@
-Use o agent @nex-comercial para ajudar o usuário com o seguinte assunto comercial: $ARGUMENTS
+Use the @nex-comercial agent to help the user with the following commercial matter: $ARGUMENTS
 
-Se nenhum argumento foi fornecido, pergunte ao usuário como pode ajudar no contexto comercial (pipeline, leads, propostas, qualificação, KPIs, follow-ups, etc).
+If no arguments were provided, ask the user how you can help in the commercial context (pipeline, leads, proposals, qualification, KPIs, follow-ups, etc).

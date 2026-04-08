@@ -212,7 +212,7 @@ If the context file has example posts, open with: "I'll match the style from you
 
 ## Publishing with ferramenta externa
 
-O conteúdo criado deve ser salvo em 04 Redes Sociais/ com prefixo [C]. O usuário publica manualmente ou agenda via ferramenta externa:
+Created content should be saved in 04 Redes Sociais/ with [C] prefix. The user publishes manually or schedules via external tool:
 
 > "Want me to schedule this? I can queue it for your next available slot or pick a specific time."
 
@@ -242,7 +242,7 @@ Before delivering the final post, verify:
 - Does not write carousels or slide decks — see **social-carousel-writer** for slide-by-slide content
 - Does not analyze post performance or metrics — see **social-performance-analyzer** for analytics
 - Does not define content strategy or decide what to post — see **social-content-strategy** for planning
-- Does not execute code or access external APIs sem integração de publicação automática — salvar como rascunho
+- Does not execute code or access external APIs without automated publishing integration — save as draft
 - Does not produce visual design or images — output is text copy only, ready to paste
 
 ## Related Skills

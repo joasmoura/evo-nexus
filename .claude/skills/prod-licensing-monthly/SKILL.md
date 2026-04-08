@@ -7,7 +7,7 @@ description: "Monthly open source growth report — comprehensive 30d analysis o
 
 Rotina mensal que faz análise completa de crescimento do open source.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 

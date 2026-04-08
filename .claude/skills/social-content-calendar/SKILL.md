@@ -244,7 +244,7 @@ After presenting: "Ready to start filling in post drafts? Use **social-post-writ
 - Does not define content pillars or strategy from scratch — see **social-content-strategy** for that
 - Does not analyze past post performance — see **social-performance-analyzer** for analytics
 - Does not provide platform-specific algorithm tactics — see **social-platform-strategy** for platform guidance
-- Does not execute code or access external APIs sem integração de publicação automática — salvar como rascunho
+- Does not execute code or access external APIs without automated publishing integration — save as draft
 - Does not manage cross-posting or content adaptation — see **social-content-repurposer** for reformatting across platforms
 
 ## See also

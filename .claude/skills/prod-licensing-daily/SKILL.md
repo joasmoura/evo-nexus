@@ -7,7 +7,7 @@ description: "Daily open source growth report — queries licensing API for 24h 
 
 Rotina diária que consulta a API de licenciamento e gera relatório HTML de crescimento.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Fluxo
 

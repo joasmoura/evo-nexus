@@ -7,7 +7,7 @@ description: "End-of-day consolidation — analyzes agent memory, ADW logs, meet
 
 Rotina de encerramento que consolida tudo que aconteceu no dia: memória dos agentes, logs de ADW, reuniões, tarefas e aprendizados.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 
 ## Step 1 — Coletar dados do dia (silenciosamente)
 

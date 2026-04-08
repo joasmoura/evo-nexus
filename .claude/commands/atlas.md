@@ -1,3 +1,3 @@
-Use o agent @atlas-project para ajudar o usuário com o seguinte assunto de projetos: $ARGUMENTS
+Use the @atlas-project agent to help the user with the following project matter: $ARGUMENTS
 
-Se nenhum argumento foi fornecido, pergunte ao usuário como pode ajudar no contexto de projetos (status, blockers, roadmap, backlog, relatórios, etc).
+If no arguments were provided, ask the user how you can help in the project context (status, blockers, roadmap, backlog, reports, etc).

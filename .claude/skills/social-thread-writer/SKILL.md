@@ -272,7 +272,7 @@ Before delivering the final thread, verify:
 - Does not write carousels or slide decks — see **social-carousel-writer** for slide-by-slide content
 - Does not analyze post performance or metrics — see **social-performance-analyzer** for analytics
 - Does not define content strategy or decide what to post — see **social-content-strategy** for planning
-- Does not execute code or access external APIs sem integração de publicação automática — salvar como rascunho
+- Does not execute code or access external APIs without automated publishing integration — save as draft
 - Does not produce visual design or images — output is text copy for each thread post only
 
 ## Related Skills

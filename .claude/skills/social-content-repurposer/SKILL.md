@@ -226,7 +226,7 @@ Deliver repurposed content in this structure:
 - Does not analyze post performance or metrics — see **social-performance-analyzer** for analytics
 - Does not define content strategy or pillars — see **social-content-strategy** for strategic planning
 - Does not produce visual design or images — output is text-based derivatives only
-- Does not execute code or access external APIs sem integração de publicação automática — salvar como rascunho
+- Does not execute code or access external APIs without automated publishing integration — save as draft
 - Does not plan a full content calendar — see **social-content-calendar** for scheduling across weeks
 
 ## Related Skills

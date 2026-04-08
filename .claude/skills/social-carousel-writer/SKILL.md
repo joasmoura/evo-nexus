@@ -292,7 +292,7 @@ CTA: Save this framework. Use it on your next post. Follow for one writing tip e
 - Does not write single standalone posts — see **social-post-writer** for that
 - Does not write multi-part threads — see **social-thread-writer** for threaded content
 - Does not analyze post performance or metrics — see **social-performance-analyzer** for analytics
-- Does not execute code or access external APIs sem integração de publicação automática — salvar como rascunho
+- Does not execute code or access external APIs without automated publishing integration — save as draft
 - Does not handle scheduling or calendar planning — see **social-content-calendar** for posting schedules
 
 ## Related Skills

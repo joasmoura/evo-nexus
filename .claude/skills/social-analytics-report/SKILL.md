@@ -7,7 +7,7 @@ description: "Unified social media analytics report — consolidates YouTube, In
 
 Rotina que puxa dados de TODAS as plataformas sociais conectadas (YouTube, Instagram, LinkedIn) e gera um único relatório HTML comparativo.
 
-**Sempre responder em pt-BR.**
+**Always respond in English.**
 **Agente:** @pixel
 
 ## Fluxo
