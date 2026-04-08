@@ -3,15 +3,15 @@ name: social-instagram-report
 description: "Instagram analytics report — queries profile stats, recent posts, engagement rates, insights for all connected accounts. Generates HTML report. Use when user says 'instagram report', 'relatório instagram', 'como tá o insta', 'métricas instagram', or any reference to Instagram performance analysis."
 ---
 
-# Instagram Report — Analytics dos Perfis
+# Instagram Report — Profile Analytics
 
-Rotina que puxa dados do Instagram via `/int-instagram` e gera relatório HTML de performance.
+Routine that pulls data from Instagram via `/int-instagram` and generates an HTML performance report.
 
 **Always respond in English.**
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Coletar dados de todas as contas
+### Step 1 — Collect data from all accounts
 
 Para cada conta Instagram configurada:
 
@@ -21,29 +21,29 @@ python3 {project-root}/.claude/skills/int-instagram/scripts/instagram_client.py 
 python3 {project-root}/.claude/skills/int-instagram/scripts/instagram_client.py account_insights [account]
 ```
 
-### Passo 2 — Comparar com período anterior
+### Step 2 — Compare with previous period
 
-Ler relatório anterior em `04 Redes Sociais/reports/instagram/` se existir. Calcular deltas de seguidores, engagement, impressões.
+Read previous report from `04 Redes Sociais/reports/instagram/` if it exists. Calculate deltas de seguidores, engagement, impressões.
 
-### Passo 3 — Analisar
+### Step 3 — Analyze
 
-Por conta:
-1. **KPIs:** seguidores, media count, engagement rate médio
-2. **Posts do período:** publicados, likes, comments, engagement
-3. **Top post:** melhor performance
-4. **Tipo de conteúdo:** Reels vs Image vs Carousel — qual performa melhor
-5. **Account insights:** impressões, alcance, profile views (se disponível)
+Per account:
+1. **KPIs:** followers, media count, average engagement rate
+2. **Period posts:** published, likes, comments, engagement
+3. **Top post:** best performance
+4. **Content type:** Reels vs Image vs Carousel — which performs better
+5. **Account insights:** impressions, reach, profile views (if available)
 
-### Passo 4 — Gerar HTML
+### Step 4 — Generate HTML
 
-Usar template `.claude/templates/html/social-analytics-report.html` com `{{REPORT_TYPE}}` = "Instagram".
+Use template `.claude/templates/html/social-analytics-report.html` with `{{REPORT_TYPE}}` = "Instagram".
 
-### Passo 5 — Salvar
+### Step 5 — Save
 
 ```
 04 Redes Sociais/reports/instagram/[C] YYYY-MM-DD-instagram-report.html
 ```
 
-### Passo 6 — Telegram
+### Step 6 — Telegram
 
-Notificar: seguidores por conta + engagement médio + melhor post
+Notify: followers per account + average engagement + best post

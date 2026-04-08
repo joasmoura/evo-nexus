@@ -3,13 +3,13 @@ name: prod-end-of-day
 description: "End-of-day consolidation — analyzes agent memory, ADW logs, meetings, tasks, and learnings to generate a complete daily log. Trigger when user says 'end of day', 'wrap up', 'encerra o dia', 'finaliza', 'done for today', 'goodnight', 'boa noite', 'shutdown', or anything that signals finishing a work session."
 ---
 
-# End of Day — Consolidação do Dia
+# End of Day — Daily Consolidation
 
-Rotina de encerramento que consolida tudo que aconteceu no dia: memória dos agentes, logs de ADW, reuniões, tarefas e aprendizados.
+End-of-day routine that consolidates everything that happened during the day: agent memory, ADW logs, meetings, tasks, and learnings.
 
 **Always respond in English.**
 
-## Step 1 — Coletar dados do dia (silenciosamente)
+## Step 1 — Collect data do dia (silenciosamente)
 
 Ler todas as fontes disponíveis sem narrar cada passo:
 
@@ -40,25 +40,25 @@ Isso dá o panorama real do que mudou no workspace — mais preciso que ler a co
 ### 1f. Sessão atual
 Revisar a conversa da sessão atual — o que foi discutido, decidido e feito.
 
-## Step 2 — Consolidar aprendizados
+## Step 2 — Consolidate learnings
 
-Analisar tudo que foi coletado e identificar:
+Analyze tudo que foi coletado e identificar:
 - **Decisões tomadas** — o que foi decidido e por quê
 - **Aprendizados** — padrões, correções, feedbacks que devem ser lembrados
 - **Pessoas** — contexto novo sobre pessoas do time
 - **Pendências reais** — coisas que ficaram em aberto de verdade (não inventar)
 
-## Step 3 — Salvar memória
+## Step 3 — Save memória
 
 Se houver decisões, aprendizados ou feedbacks relevantes, salvar na memória persistente em `memory/` seguindo o sistema de memória do workspace (ver `prod-memory-management`).
 
 Não duplicar — verificar se já existe memória similar antes de criar.
 
-## Step 4 — Gerar log do dia
+## Step 4 — Generate daily log
 
-Ler o template em `.claude/templates/end-of-day-log.md` e preencher com os dados consolidados.
+Read the template at `.claude/templates/end-of-day-log.md` e preencher com os dados consolidados.
 
-Salvar em:
+Save em:
 ```
 01 Daily Logs/[C] YYYY-MM-DD.md
 ```
@@ -70,13 +70,13 @@ O log deve incluir:
 - Pendências (só se reais)
 - Onde retomar amanhã
 
-## Step 5 — Organizar tarefas
+## Step 5 — Organize tasks
 
 Rodar `/prod-review-todoist` para garantir que tarefas criadas durante o dia estão categorizadas e traduzidas.
 
-## Step 6 — Confirmar
+## Step 6 — Confirm
 
-Apresentar resumo curto:
+Present a short summary:
 
 ```
 ## Dia encerrado

@@ -3,83 +3,83 @@ name: prod-review-todoist
 description: "Review and organize Todoist tasks in the Evolution project. Finds uncategorized, untranslated, or messy tasks and organizes them with proper categories, PT-BR translation, and actionable titles. Use when user says 'review todoist', 'organiza tarefas', 'triagem todoist', 'limpa o todoist', 'organiza o Evolution' or similar."
 ---
 
-# Review Todoist — Triagem do Projeto Evolution
+# Review Todoist — Evolution Project Triage
 
-Skill para revisar e organizar tarefas do projeto Evolution no Todoist. Identifica tarefas sem categoria, em inglês, genéricas ou desorganizadas e corrige diretamente.
+Skill to review and organize tasks in the Evolution Todoist project. Identifies uncategorized, English-only, generic, or disorganized tasks and fixes them directly.
 
-## Pré-requisitos
+## Prerequisites
 
 - CLI `todoist` instalado e autenticado
 - Projeto `Evolution` existente no Todoist
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Listar tarefas do projeto Evolution
+### Step 1 — List Evolution project tasks
 
 ```bash
 todoist tasks -p "Evolution"
 ```
 
-### Passo 2 — Identificar tarefas que precisam de organização
+### Step 2 — Identify tasks that need organization
 
-Uma tarefa precisa de triagem se atende **qualquer** destes critérios:
+A task needs triage if it meets **any** of these criteria:
 
-1. **Sem categoria** — não tem prefixo `[Categoria]` no título
-2. **Em inglês** — título não está em PT-BR
-3. **Genérica/vaga** — título não deixa claro o que fazer (ex: "update thing", "send docs")
-4. **Sem contexto** — não tem comentário com origem/objetivo (especialmente tarefas vindas do sync-meetings)
+1. **No category** — does not have `[Categoria]` prefix in the title
+2. **In English** — title is not in PT-BR
+3. **Generic/vague** — title does not make clear what to do (ex: "update thing", "send docs")
+4. **No context** — no comment with origin/objective (especially tasks from sync-meetings)
 
-### Passo 3 — Organizar cada tarefa
+### Step 3 — Organize each task
 
-Para cada tarefa que precisa de triagem, aplicar:
+For each task that needs triage, apply:
 
-#### 3a. Categorizar
+#### 3a. Categorize
 
-Adicionar prefixo `[Categoria]` ao título. Categorias disponíveis:
+Add `[Categoria]` prefix to the title. Available categories:
 
-| Categoria | Quando usar |
+| Category | When to use |
 |---|---|
-| `[Produto & Tech]` | Desenvolvimento, bugs, features, infra, deploy, código |
-| `[Marketing]` | Conteúdo, campanhas, vídeos, social media, lançamentos |
-| `[Comercial]` | Pipeline, propostas, parcerias, leads, pricing |
-| `[Financeiro]` | Contas, NFs, pagamentos, métricas financeiras |
-| `[Operação]` | Processos internos, grupos, acessos, comunicação do time |
-| `[Estratégia]` | OKRs, roadmap, análises, decisões estratégicas |
-| `[Comunidade]` | Discord, suporte, feedback de usuários, beta testers |
-| `[Roadmap]` | Itens de roadmap futuro, avaliação de features |
+| `[Produto & Tech]` | Development, bugs, features, infra, deploy, code |
+| `[Marketing]` | Content, campaigns, videos, social media, launches |
+| `[Comercial]` | Pipeline, proposals, partnerships, leads, pricing |
+| `[Financeiro]` | Accounts, invoices, payments, financial metrics |
+| `[Operação]` | Internal processes, groups, access, team communication |
+| `[Estratégia]` | OKRs, roadmap, analyses, strategic decisions |
+| `[Comunidade]` | Discord, support, user feedback, beta testers |
+| `[Roadmap]` | Future roadmap items, feature evaluation |
 
-#### 3b. Traduzir para PT-BR
+#### 3b. Translate to PT-BR
 
-Se o título está em inglês, traduzir para português brasileiro mantendo clareza e objetividade.
+If the title is in English, translate to Brazilian Portuguese keeping clarity and objectivity.
 
-**Antes:** `Send event registration link to team member`
-**Depois:** `[Operação] Enviar link de inscrição do evento para membro do time`
+**Before:** `Send event registration link to team member`
+**After:** `[Operação] Enviar link de inscrição do evento para membro do time`
 
-#### 3c. Tornar acionável
+#### 3c. Make actionable
 
-O título deve deixar claro:
-- **O que** fazer (verbo no infinitivo)
-- **Para quem/onde** (se aplicável)
-- **Qual o resultado esperado** (se não for óbvio)
+The title should make clear:
+- **What** to do (infinitive verb)
+- **For whom/where** (if applicable)
+- **Expected result** (if not obvious)
 
-**Antes:** `Upload web panel; grant team member access`
-**Depois:** `[Operação] Publicar painel web do evento e liberar acesso para membro do time`
+**Before:** `Upload web panel; grant team member access`
+**After:** `[Operação] Publicar painel web do evento e liberar acesso para membro do time`
 
-#### 3d. Aplicar a atualização
+#### 3d. Apply the update
 
 ```bash
 todoist update <task-id> --content "[Categoria] Título traduzido e acionável"
 ```
 
-### Passo 4 — Executar direto
+### Step 4 — Execute directly
 
-**Regra fundamental: executar a organização diretamente, sem relatório intermediário.**
+**Fundamental rule: execute the organization directly, without an intermediate report.**
 
-Não listar as tarefas antes de organizar. Não pedir confirmação para cada uma. Organizar todas de uma vez e confirmar no final.
+Do not list tasks before organizing. Do not ask for confirmation on each one. Organize all at once and confirm at the end.
 
-### Passo 5 — Salvar artefato
+### Step 5 — Save artefato
 
-Salvar um relatório curto em `01 Daily Logs/[C] YYYY-MM-DD-todoist-review.md` com:
+Save um relatório curto em `01 Daily Logs/[C] YYYY-MM-DD-todoist-review.md` com:
 
 ```markdown
 # Triagem Todoist — YYYY-MM-DD
@@ -96,11 +96,11 @@ Salvar um relatório curto em `01 Daily Logs/[C] YYYY-MM-DD-todoist-review.md` c
 | ... | ... | ... |
 ```
 
-Criar o diretório `01 Daily Logs/` se não existir.
+Create the directory `01 Daily Logs/` if it does not exist.
 
-### Passo 6 — Relatório final (curto)
+### Step 6 — Final report (curto)
 
-Ao terminar, apresentar apenas:
+When finished, present only:
 
 ```
 ## Triagem Todoist — Concluído
@@ -111,18 +111,18 @@ Ao terminar, apresentar apenas:
 **Já OK:** {K} (sem alteração necessária)
 ```
 
-Se o usuário quiser ver detalhes do que mudou, ele pede.
+If the user wants to see details of what changed, they ask.
 
-## Regras Importantes
+## Important Rules
 
-- **Projeto padrão é sempre `Evolution`** — não mover tarefas para outros projetos
-- **Traduzir sempre para PT-BR** — sem exceção
-- **Não alterar tarefas já organizadas** (que já têm `[Categoria]` e estão em PT-BR)
-- **Não completar nem deletar tarefas** — apenas reorganizar
-- **Não criar tarefas novas** — apenas editar as existentes
-- **Manter comentários existentes** — não alterar comentários, apenas o título
-- **Se não souber a categoria**, usar `[Operação]` como fallback
-- **Executar primeiro, reportar depois** — sem relatório intermediário
+- **Default project is always `Evolution`** — do not move tasks to other projects
+- **Always translate to PT-BR** — no exceptions
+- **Do not modify already organized tasks** (que já têm `[Categoria]` e estão em PT-BR)
+- **Do not complete or delete tasks** — only reorganize
+- **Do not create new tasks** — only edit existing ones
+- **Keep existing comments** — do not modify comments, only the title
+- **If unsure about the category**, use `[Operação]` as fallback
+- **Execute first, report after** — no intermediate report
 
 
 ### Notify via Telegram

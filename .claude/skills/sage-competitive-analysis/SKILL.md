@@ -3,15 +3,15 @@ name: sage-competitive-analysis
 description: "Analyze competitive landscape and market positioning. Use when user says 'análise competitiva', 'como tão os concorrentes', 'posicionamento', 'quem compete com a gente', 'benchmark', 'market analysis', or any reference to competitors, market positioning, or competitive advantages."
 ---
 
-# Análise Competitiva — Posicionamento de Mercado
+# Competitive Analysis — Market Positioning
 
-Skill para analisar o cenário competitivo da Evolution Foundation e identificar oportunidades de posicionamento.
+Skill to analyze the competitive landscape of Evolution Foundation and identify positioning opportunities.
 
 **Always respond in English.**
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Coletar dados internos
+### Step 1 — Collect data internos
 
 Buscar métricas atuais da Evolution:
 - Stars/forks dos repos GitHub (`/int-github-review`)
@@ -19,7 +19,7 @@ Buscar métricas atuais da Evolution:
 - Tamanho da comunidade Discord
 - Número de instalações/instâncias (se disponível)
 
-### Passo 2 — Pesquisar concorrentes
+### Step 2 — Research competitors
 
 Usar WebSearch/WebFetch para pesquisar os principais concorrentes no espaço de:
 - APIs de WhatsApp (Baileys, wa-automate, Venom, wppconnect)
@@ -33,7 +33,7 @@ Para cada concorrente, levantar:
 - GitHub stars/forks (se open source)
 - Pontos fortes e fracos
 
-### Passo 3 — Mapear posicionamento
+### Step 3 — Map positioning
 
 Criar matriz de posicionamento:
 
@@ -47,19 +47,19 @@ Criar matriz de posicionamento:
 | Comunidade | ✅ Discord + open source | ❌ | ❌ |
 | IA/Agentes | ✅ Evo AI | Parcial | ❌ |
 
-### Passo 4 — Identificar oportunidades
+### Step 4 — Identify opportunities
 
 - Gaps que nenhum concorrente cobre
 - Features onde a Evolution lidera
 - Ameaças (concorrentes crescendo rápido)
 - Moats (vantagens difíceis de copiar)
 
-### Passo 5 — Salvar relatório
+### Step 5 — Save relatório
 
-Salvar em `09 Estrategia/analises/[C] YYYY-MM-DD-competitiva.md`
+Save em `09 Estrategia/analises/[C] YYYY-MM-DD-competitiva.md`
 
-## Regras
+## Rules
 - Dados reais — pesquisar de verdade, não inventar
-- Honestidade sobre fraquezas — não esconder onde a concorrência é melhor
-- Foco em actionable — toda análise deve terminar com "o que fazer com isso"
-- Atualizar no máximo a cada 3 meses (mercado não muda toda semana)
+- Honesty about weaknesses — do not hide where the competition is better
+- Focus on actionable — every analysis should end with "what to do about it"
+- Update at most every 3 months (the market does not change every week)

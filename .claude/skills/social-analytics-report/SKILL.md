@@ -3,16 +3,16 @@ name: social-analytics-report
 description: "Unified social media analytics report — consolidates YouTube, Instagram, and LinkedIn data into one cross-platform HTML dashboard. Compares engagement, followers, top content across all platforms. Use when user says 'social analytics', 'relatório redes sociais', 'como tão as redes', 'social report', 'métricas sociais', 'cross-platform', or any reference to unified social media performance."
 ---
 
-# Social Analytics — Relatório Consolidado Cross-Platform
+# Social Analytics — Consolidated Cross-Platform Report
 
-Rotina que puxa dados de TODAS as plataformas sociais conectadas (YouTube, Instagram, LinkedIn) e gera um único relatório HTML comparativo.
+Routine that pulls data from ALL connected social platforms (YouTube, Instagram, LinkedIn) and generates a single comparative HTML report.
 
 **Always respond in English.**
 **Agente:** @pixel
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Coletar dados de todas as plataformas (silenciosamente)
+### Step 1 — Collect data from all platforms (silently)
 
 Executar os scripts de cada integração e capturar os resultados:
 
@@ -36,7 +36,7 @@ python3 {project-root}/.claude/skills/int-linkedin/scripts/linkedin_client.py su
 
 Se alguma plataforma falhar ou não tiver dados, incluir no relatório como "Sem dados — plataforma não configurada ou API limitada" sem quebrar o relatório.
 
-### Passo 2 — Consolidar métricas cross-platform
+### Step 2 — Consolidar métricas cross-platform
 
 Calcular:
 
@@ -46,7 +46,7 @@ Calcular:
 4. **Plataforma com maior crescimento** (delta de seguidores, se houver relatório anterior)
 5. **Plataforma com maior engagement** (comparar engagement rates)
 
-### Passo 3 — Montar tabela comparativa
+### Step 3 — Montar tabela comparativa
 
 Uma row por conta:
 
@@ -57,7 +57,7 @@ Uma row por conta:
 | Instagram | secondary_account | 273 | — | 76 | — | — |
 | LinkedIn | Your Profile | — | — | — | — | Perfil apenas |
 
-### Passo 4 — Top conteúdos cross-platform
+### Step 4 — Top conteúdos cross-platform
 
 Rankear os top 10 conteúdos de TODAS as plataformas por engagement (likes + comments / views ou followers). Mostrar:
 - Plataforma
@@ -66,14 +66,14 @@ Rankear os top 10 conteúdos de TODAS as plataformas por engagement (likes + com
 - Engagement %
 - Link
 
-### Passo 5 — Comparar com período anterior
+### Step 5 — Compare with previous period
 
-Ler o relatório anterior em `04 Redes Sociais/reports/consolidated/` se existir. Calcular deltas de:
+Ler o relatório anterior em `04 Redes Sociais/reports/consolidated/` if it exists. Calculate deltas de:
 - Seguidores por plataforma
 - Engagement médio
 - Volume de publicações
 
-### Passo 6 — Insights cross-platform
+### Step 6 — Insights cross-platform
 
 Gerar análise com:
 - Qual plataforma cresce mais?
@@ -82,7 +82,7 @@ Gerar análise com:
 - Recomendações: onde investir mais conteúdo, que formato priorizar
 - Plataformas sem dados (LinkedIn posts, etc) — o que falta pra destravar
 
-### Passo 7 — Gerar HTML
+### Step 7 — Generate HTML
 
 Ler template `.claude/templates/html/social-analytics-report.html` e preencher todos os `{{PLACEHOLDER}}`.
 
@@ -130,18 +130,18 @@ Para `{{MISSING_INTEGRATIONS}}` — se alguma plataforma não está configurada:
 </div>
 ```
 
-### Passo 8 — Salvar
+### Step 8 — Save
 
 ```
 04 Redes Sociais/reports/consolidated/[C] YYYY-MM-DD-social-analytics.html
 ```
 
-Criar diretório se não existir.
+Criar diretório if it does not exist.
 
-### Passo 9 — Telegram
+### Step 9 — Telegram
 
-Notificar: `reply(chat_id="YOUR_CHAT_ID", text="...")`
-Formato:
+Notify: `reply(chat_id="YOUR_CHAT_ID", text="...")`
+Format:
 ```
 📊 Social Analytics — {period}
 👥 Total seguidores: {N} ({delta})

@@ -3,13 +3,13 @@ name: pulse-faq-sync
 description: "Sync and update the community FAQ from Discord conversations, WhatsApp groups, and GitHub issues. Identifies recurring questions, adds new entries, and keeps the FAQ as a living knowledge base. Use when user says 'atualiza faq', 'sync faq', 'faq da comunidade', 'perguntas frequentes', or when running community routines that detect unanswered/recurring questions."
 ---
 
-# FAQ Sync — Base de Conhecimento Viva
+# FAQ Sync — Living Knowledge Base
 
-Rotina que mantém o FAQ da comunidade sempre atualizado, alimentado por perguntas do Discord, WhatsApp e issues do GitHub.
+Routine that keeps the community FAQ always updated, fed by questions from Discord, WhatsApp, and GitHub issues.
 
 **Always respond in English.**
 
-## Arquivo principal
+## Main file
 
 ```
 03 Comunidade/[C] FAQ.md
@@ -17,7 +17,7 @@ Rotina que mantém o FAQ da comunidade sempre atualizado, alimentado por pergunt
 
 Este é o arquivo fonte de verdade. Todos os agentes e bots de suporte devem consultar este arquivo.
 
-## Estrutura do FAQ
+## FAQ Structure
 
 O arquivo segue este formato:
 
@@ -79,15 +79,15 @@ O arquivo segue este formato:
 ...
 ```
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Ler FAQ atual
+### Step 1 — Read current FAQ
 
 Ler `03 Comunidade/[C] FAQ.md`. Se não existir, criar com a estrutura base.
 
 Contar quantas entradas existem e quais categorias.
 
-### Passo 2 — Coletar perguntas novas
+### Step 2 — Collect new questions
 
 **Do Discord (últimas 24h):**
 Usar `/discord-get-messages` nos canais:
@@ -130,7 +130,7 @@ Issues resolvidas no suporte pago são fonte de ouro para o FAQ — são problem
 - Marcar fonte como "Linear — Suporte Pago"
 - Priorizar inclusão no FAQ (clientes pagantes = alta relevância)
 
-### Passo 3 — Analisar e classificar
+### Step 3 — Analyze e classificar
 
 Para cada pergunta encontrada:
 
@@ -139,7 +139,7 @@ Para cada pergunta encontrada:
 3. **Tem resposta?** → Se alguém respondeu no Discord/GitHub, usar como base
 4. **Qual categoria?** → Classificar na categoria correta do FAQ
 
-### Passo 4 — Atualizar FAQ
+### Step 4 — Update FAQ
 
 Para cada pergunta nova que deve entrar:
 - Formular pergunta clara em PT-BR
@@ -152,16 +152,16 @@ Para perguntas existentes:
 - Atualizar resposta se houve informação nova
 - Marcar como "atualizado" com nova data
 
-### Passo 5 — Atualizar header
+### Step 5 — Update header
 
 Atualizar o header do FAQ com:
 - Data/hora da última sync
 - Total de perguntas
 - Categorias existentes
 
-### Passo 6 — Relatório
+### Step 6 — Report
 
-Apresentar resumo curto:
+Present a short summary:
 
 ```
 ## FAQ Sync — {data}
@@ -176,16 +176,16 @@ Novas:
 - {pergunta 2} → {categoria}
 ```
 
-## Regras
+## Rules
 
-- **Qualidade > quantidade** — só adicionar perguntas que realmente são recorrentes ou úteis
-- **Respostas acionáveis** — não copiar texto genérico, escrever resposta que resolve o problema
-- **PT-BR** — todas as perguntas e respostas em português
-- **Não duplicar** — sempre verificar se já existe antes de adicionar
-- **Fonte obrigatória** — toda entrada deve ter de onde veio
-- **Não inventar respostas** — se não tem resposta clara, marcar como "pendente de documentação"
-- **Tags nos comentários** — manter as tags HTML comment pra facilitar busca
-- **Manter organizado** — categorias em ordem lógica (instalação → config → integrações → produto → billing → erros)
+- **Quality > quantity** — only add questions that are truly recurring or useful
+- **Actionable answers** — do not copy generic text, write answers that solve the problem
+- **PT-BR** — all questions and answers in Portuguese
+- **Do not duplicate** — always check if it already exists before adding
+- **Source required** — every entry must have its origin
+- **Do not fabricate answers** — if there is no clear answer, mark as "pending documentation"
+- **Tags in comments** — keep HTML comment tags for easy searching
+- **Keep organized** — categories in logical order (installation -> config -> integrations -> product -> billing -> errors)
 
 
 ### Notify via Telegram

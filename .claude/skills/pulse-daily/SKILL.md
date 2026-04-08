@@ -3,15 +3,15 @@ name: pulse-daily
 description: "Daily community pulse report — reads Discord AND WhatsApp messages from the last 24h, analyzes activity, sentiment, support questions, and top topics. Generates an HTML report using the Evolution brand. Use when user says 'pulso da comunidade', 'community pulse', 'como tá o discord', 'como tá o whatsapp', 'relatório diário comunidade', or any reference to daily community health check."
 ---
 
-# Pulso Diário da Comunidade
+# Daily Community Pulse
 
-Rotina diária que lê as mensagens do Discord e WhatsApp das últimas 24h e gera um relatório HTML de saúde da comunidade.
+Daily routine that reads Discord and WhatsApp messages from the last 24h and generates an HTML community health report.
 
 **Always respond in English.**
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Coletar dados do Discord
+### Step 1 — Collect Discord data
 
 Usar a skill `/discord-get-messages` para buscar mensagens das últimas 24h nos canais principais:
 
@@ -27,7 +27,7 @@ Canais a monitorar (Guild ID: `YOUR_GUILD_ID`):
 
 Para cada canal, buscar as últimas 100 mensagens e filtrar as das últimas 24h.
 
-### Passo 1b — Coletar dados do WhatsApp
+### Step 1b — Collect WhatsApp data
 
 Usar a skill `/int-whatsapp` para buscar mensagens das últimas 24h:
 
@@ -42,7 +42,7 @@ python3 {project-root}/.claude/skills/int-whatsapp/scripts/whatsapp_client.py st
 
 Extrair: total de mensagens, grupos ativos, participantes únicos, tópicos discutidos, perguntas de suporte.
 
-### Passo 2 — Analisar
+### Step 2 — Analyze
 
 A partir das mensagens coletadas, calcular:
 
@@ -54,24 +54,24 @@ A partir das mensagens coletadas, calcular:
 6. **WhatsApp**: grupos ativos, total mensagens, participantes únicos, tópicos — seção separada no relatório
 7. **Saúde geral**: Normal (>80% positivo, <3 perguntas abertas), Atenção (sentimento misto ou 3-5 perguntas abertas), Crítico (sentimento negativo ou >5 perguntas sem resposta)
 
-### Passo 3 — Gerar relatório HTML
+### Step 3 — Generate HTML report
 
-Ler o template em `.claude/templates/html/community-daily-pulse.html`.
+Read the template at `.claude/templates/html/community-daily-pulse.html`.
 
-Substituir os placeholders `{{...}}` com os dados reais coletados.
+Replace the placeholders `{{...}}` with the actual collected data.
 
-Logo da Evolution disponível em: `02 Projects/Evolution Foundation/Logos finais/Favicon logo/SVG/Favicon Color 500.svg`
+Evolution logo available at: `02 Projects/Evolution Foundation/Logos finais/Favicon logo/SVG/Favicon Color 500.svg`
 
-Salvar o HTML preenchido em:
+Save o HTML preenchido em:
 ```
 03 Comunidade/reports/daily/[C] YYYY-MM-DD-community-pulse.html
 ```
 
-Criar diretório se não existir.
+Criar diretório if it does not exist.
 
-### Passo 4 — Resumo no terminal
+### Step 4 — Terminal summary
 
-Apresentar resumo curto no terminal:
+Present a short summary in the terminal:
 
 ```
 ## Pulso Diário — {data}
@@ -82,16 +82,16 @@ Suporte: {N} sem resposta
 Sentimento: {emoji} {label}
 Top: {tópico 1}, {tópico 2}, {tópico 3}
 
-Relatório salvo em 03 Comunidade/reports/daily/
+Report salvo em 03 Comunidade/reports/daily/
 ```
 
-## Regras
+## Rules
 
-- **Não responder mensagens no Discord** — apenas ler e analisar
-- **Sentimento baseado em conteúdo real** — não chutar, analisar as mensagens
-- **Perguntas sem resposta = prioridade** — destacar sempre
-- **Comparar com média** — se tiver relatórios anteriores no diretório, comparar métricas
-- **Canais vazios = OK** — se um canal não teve atividade, não reportar como problema
+- **Do not reply to messages on Discord** — only read and analyze
+- **Sentiment based on real content** — do not guess, analyze the messages
+- **Unanswered questions = priority** — always highlight
+- **Compare with average** — if previous reports exist in the directory, compare metrics
+- **Empty channels = OK** — if a channel had no activity, do not report as a problem
 
 
 ### Notify via Telegram

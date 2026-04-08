@@ -3,15 +3,15 @@ name: pulse-weekly
 description: "Weekly community analysis report — aggregates Discord AND WhatsApp activity, engagement metrics, sentiment trends, top contributors, product insights, and docs gaps. Generates an HTML report using the Evolution brand. Use when user says 'relatório semanal comunidade', 'weekly community', 'análise da comunidade', 'como foi a semana no discord', 'como foi o whatsapp', or any reference to weekly community analysis."
 ---
 
-# Relatório Semanal da Comunidade
+# Weekly Community Report
 
-Rotina semanal que analisa a atividade do Discord e WhatsApp dos últimos 7 dias e gera um relatório HTML completo.
+Weekly routine that analyzes Discord and WhatsApp activity from the last 7 days and generates a complete HTML report.
 
 **Always respond in English.**
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Coletar dados da semana
+### Step 1 — Collect the week's data
 
 Usar a skill `/discord-get-messages` para buscar mensagens dos últimos 7 dias nos canais principais.
 
@@ -23,7 +23,7 @@ Canais a monitorar:
 
 Para cada canal, buscar mensagens paginadas (100 por request) até cobrir 7 dias.
 
-### Passo 1b — Coletar dados do WhatsApp (7 dias)
+### Step 1b — Collect WhatsApp data (7 dias)
 
 Usar a skill `/int-whatsapp` para buscar mensagens e stats dos últimos 7 dias:
 
@@ -35,7 +35,7 @@ python3 {project-root}/.claude/skills/int-whatsapp/scripts/whatsapp_client.py gr
 
 Incluir no relatório como seção separada "WhatsApp" com: grupos ativos, total mensagens, participantes únicos, tópicos, perguntas de suporte.
 
-### Passo 2 — Calcular métricas
+### Step 2 — Calculate metrics
 
 1. **Crescimento**: total membros (estimativa), novos vs saídas, churn net
 2. **WAM (Weekly Active Members)**: membros únicos que enviaram mensagem
@@ -44,7 +44,7 @@ Incluir no relatório como seção separada "WhatsApp" com: grupos ativos, total
 5. **Tempo de primeira resposta**: mediana do tempo entre pergunta e primeira resposta
 6. **Mensagens por membro ativo**: total msgs / WAM (meta: >4)
 
-### Passo 3 — Analisar sentimento e tópicos
+### Step 3 — Analyze sentimento e tópicos
 
 Para cada dia da semana:
 1. **Sentimento**: classificar mensagens como positivo/neutro/negativo
@@ -52,22 +52,22 @@ Para cada dia da semana:
 
 Consolidar:
 - Top 5 tópicos com barra de sentimento
-- Tendência de sentimento ao longo da semana
+- Sentiment trend ao longo da semana
 
-### Passo 4 — Identificar destaques
+### Step 4 — Identify highlights
 
 1. **Top 5 membros mais ativos**: por volume de mensagens + respostas dadas
 2. **Novos membros que contribuíram**: quem é novo e já participou
 3. **Membros em risco de churn**: previamente ativos, inativos esta semana
 
-### Passo 5 — Extrair insights para o produto
+### Step 5 — Extract product insights
 
-Analisar as mensagens e identificar:
+Analyze as mensagens e identificar:
 1. **Features mais solicitadas**: pedidos espontâneos de funcionalidades
 2. **Bugs reportados**: problemas técnicos mencionados
 3. **Docs gap**: perguntas cuja resposta deveria estar na documentação (indicar frequência)
 
-### Passo 6 — Comparativo
+### Step 6 — Comparison
 
 Se existirem relatórios anteriores em `03 Comunidade/reports/weekly/`, comparar:
 - WAM esta semana vs anterior
@@ -75,25 +75,25 @@ Se existirem relatórios anteriores em `03 Comunidade/reports/weekly/`, comparar
 - Taxa de resolução vs anterior
 - Tempo de resposta vs anterior
 
-### Passo 7 — Gerar relatório HTML
+### Step 7 — Generate HTML report
 
-Ler o template em `.claude/templates/html/community-weekly-report.html`.
+Read the template at `.claude/templates/html/community-weekly-report.html`.
 
-Substituir os placeholders `{{...}}` com os dados reais.
+Replace the placeholders `{{...}}` with the actual data.
 
-Logo disponível em: `02 Projects/Evolution Foundation/Logos finais/Favicon logo/SVG/Favicon Color 500.svg`
+Logo available at: `02 Projects/Evolution Foundation/Logos finais/Favicon logo/SVG/Favicon Color 500.svg`
 
-Salvar em:
+Save em:
 ```
 03 Comunidade/reports/weekly/[C] YYYY-WXX-community-report.html
 ```
 
-### Passo 8 — Resumo executivo
+### Step 8 — Executive summary
 
-Apresentar no terminal:
+Present in the terminal:
 
 ```
-## Relatório Semanal — Semana {WXX}
+## Report Semanal — Semana {WXX}
 
 Membros: {N} ({+/-}) | WAM: {N} ({X}%)
 Resolução: {X}% | 1st response: {X} min
@@ -101,16 +101,16 @@ Sentimento: {label}
 Top: {tópico 1}, {tópico 2}, {tópico 3}
 Insights: {N} features, {N} bugs, {N} docs gaps
 
-Relatório salvo em 03 Comunidade/reports/weekly/
+Report salvo em 03 Comunidade/reports/weekly/
 ```
 
-## Regras
+## Rules
 
-- **Não responder mensagens** — apenas ler e analisar
-- **Dados reais** — métricas baseadas em mensagens coletadas, sem inventar
-- **Docs gap é ouro** — cada pergunta sem doc vira item de backlog
-- **Comparar é fundamental** — sempre mostrar tendência vs semana anterior
-- **Insights para produto** — a seção mais valiosa, cuidar bem
+- **Do not reply to messages** — only read and analyze
+- **Real data** — metrics based on collected messages, no fabrication
+- **Docs gap is gold** — each question without docs becomes a backlog item
+- **Comparison is fundamental** — always show trend vs previous week
+- **Product insights** — a seção mais valiosa, cuidar bem
 
 
 ### Notify via Telegram

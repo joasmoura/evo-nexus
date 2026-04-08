@@ -5,31 +5,31 @@ description: "LinkedIn analytics report — profile data, posts (when available)
 
 # LinkedIn Report — Analytics
 
-Rotina que puxa dados do LinkedIn via `/int-linkedin` e gera relatório.
+Routine that pulls data from LinkedIn via `/int-linkedin` and generates a report.
 
 **Always respond in English.**
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Coletar dados
+### Step 1 — Collect data
 
 ```bash
 python3 {project-root}/.claude/skills/int-linkedin/scripts/linkedin_client.py summary
 python3 {project-root}/.claude/skills/int-linkedin/scripts/linkedin_client.py my_posts 1 10
 ```
 
-Se `my_posts` retornar erro de permissão, informar que precisa de aprovação e usar dados disponíveis.
+If `my_posts` returns a permission error, inform that approval is needed and use available data.
 
-### Passo 2 — Gerar relatório
+### Step 2 — Gerar relatório
 
-Usar template `.claude/templates/html/social-analytics-report.html` com dados disponíveis. Marcar seções sem dados como "Pendente — requer aprovação LinkedIn Advertising API".
+Use template `.claude/templates/html/social-analytics-report.html` with available data. Mark sections without data as "Pending — requires LinkedIn Advertising API approval".
 
-### Passo 3 — Salvar
+### Step 3 — Save
 
 ```
 04 Redes Sociais/reports/linkedin/[C] YYYY-MM-DD-linkedin-report.html
 ```
 
-### Passo 4 — Telegram
+### Step 4 — Telegram
 
-Notificar com dados disponíveis.
+Notify with available data.

@@ -3,15 +3,15 @@ name: prod-dashboard
 description: "Daily consolidation dashboard — reads outputs from all routines (morning, linear, github, community, strategy, meetings, metrics) and generates a unified HTML dashboard. Trigger when user says 'dashboard', 'gera dashboard', 'visão geral', 'consolidação', 'overview', or 'painel geral'."
 ---
 
-# Dashboard Consolidado — Visão 360
+# Consolidated Dashboard — 360 View
 
-Rotina de consolidação que lê os outputs das outras rotinas e gera um HTML dashboard unificado com visão geral de todas as áreas do negócio.
+Consolidation routine that reads outputs from other routines and generates a unified HTML dashboard with an overview of all business areas.
 
 **Always respond in English.**
 
 **IMPORTANTE:** Esta rotina NÃO busca dados novos. Ela lê os outputs já gerados pelas outras rotinas do dia/semana e consolida tudo numa view única.
 
-## Step 1 — Coletar dados das fontes (silenciosamente)
+## Step 1 — Collect data das fontes (silenciosamente)
 
 Ler todas as fontes disponíveis sem narrar cada passo. Se alguma fonte não existir (rotina não rodou ainda), usar "—" ou "sem dados" como fallback.
 
@@ -75,7 +75,7 @@ Critérios:
 
 ## Step 3 — Gerar dashboard HTML
 
-Ler o template em `.claude/templates/html/dashboard-consolidation.html` e substituir TODOS os `{{PLACEHOLDER}}` com os dados coletados.
+Read the template at `.claude/templates/html/dashboard-consolidation.html` e substituir TODOS os `{{PLACEHOLDER}}` com os dados coletados.
 
 Para rows dinâmicas (marcadas com `<!-- TEMPLATE -->`), gerar o HTML correto:
 
@@ -124,16 +124,16 @@ Consolidar em bullets os itens que requerem atenção imediata. Exemplos:
 
 Se não houver pontos de atenção, escrever "Nenhum ponto de atenção no momento."
 
-## Step 4 — Salvar
+## Step 4 — Save
 
-Salvar o HTML preenchido em:
+Save o HTML preenchido em:
 ```
 01 Daily Logs/[C] YYYY-MM-DD-dashboard.html
 ```
 
-## Step 5 — Confirmar
+## Step 5 — Confirm
 
-Apresentar resumo curto:
+Present a short summary:
 
 ```
 ## Dashboard gerado

@@ -3,35 +3,35 @@ name: sage-okr-review
 description: "Review and track OKRs progress. Use when user says 'como tão os OKRs', 'review de OKRs', 'progresso das metas', 'atualiza OKRs', 'definir OKRs do trimestre', or any reference to objectives, key results, or quarterly goals."
 ---
 
-# OKR Review — Acompanhamento de Metas
+# OKR Review — Goal Tracking
 
-Skill para revisar, atualizar ou definir OKRs trimestrais da empresa.
+Skill to review, update, or define quarterly company OKRs.
 
 **Always respond in English.**
 
-## Fluxo
+## Workflow
 
-### Se já existem OKRs (atualização)
+### If OKRs already exist (update)
 
-1. Ler o arquivo de OKRs mais recente em `09 Estrategia/okrs/`
-2. Para cada Key Result, buscar dados atualizados:
-   - Métricas financeiras → `/int-stripe` (MRR, assinaturas)
-   - Métricas de produto → `/int-linear-review` (issues, entregas)
-   - Métricas de comunidade → ler relatórios em `03 Comunidade/reports/`
-   - Métricas de GitHub → ler relatórios em `02 Projects/github-reviews/`
-3. Calcular progresso de cada KR (0-100%)
-4. Classificar: 🟢 on track (>70%) | 🟡 at risk (40-70%) | 🔴 off track (<40%)
-5. Atualizar o arquivo de OKRs com os novos dados
-6. Apresentar resumo
+1. Read the most recent OKRs file from `09 Estrategia/okrs/`
+2. For each Key Result, fetch updated data:
+   - Financial metrics → `/int-stripe` (MRR, assinaturas)
+   - Product metrics → `/int-linear-review` (issues, entregas)
+   - Community metrics → ler relatórios em `03 Comunidade/reports/`
+   - GitHub metrics → ler relatórios em `02 Projects/github-reviews/`
+3. Calculate progress for each KR (0-100%)
+4. Classify: 🟢 on track (>70%) | 🟡 at risk (40-70%) | 🔴 off track (<40%)
+5. Update the OKRs file with new data
+6. Present summary
 
-### Se não existem OKRs (definição)
+### If OKRs do not exist (definition)
 
-1. Entrevistar o usuário sobre prioridades do trimestre
-2. Propor 3-4 Objectives com 3-4 Key Results cada
-3. Cada KR deve ser: mensurável, com baseline e target, com prazo
-4. Salvar em `09 Estrategia/okrs/[C] YYYY-QX-okrs.md`
+1. Interview the user about the quarter's priorities
+2. Propose 3-4 Objectives with 3-4 Key Results each
+3. Each KR must be: measurable, with baseline and target, with deadline
+4. Save em `09 Estrategia/okrs/[C] YYYY-QX-okrs.md`
 
-## Formato do arquivo de OKRs
+## OKR file format
 
 ```markdown
 # OKRs — Q{X} {YYYY}
@@ -53,8 +53,8 @@ Skill para revisar, atualizar ou definir OKRs trimestrais da empresa.
 ...
 ```
 
-## Regras
-- KRs devem ser números, não atividades ("aumentar MRR pra R$15k" não "trabalhar no MRR")
-- Baseline obrigatório — sem baseline não dá pra medir progresso
-- Não inventar dados — se não tem o número, marcar como "pendente"
-- Máximo 4 Objectives por trimestre — foco > ambição
+## Rules
+- KRs should be numbers, not activities ("aumentar MRR pra R$15k" não "trabalhar no MRR")
+- Baseline required — without a baseline, progress cannot be measured
+- Do not fabricate data — if the number is unavailable, mark as "pending"
+- Maximum 4 Objectives per quarter — focus > ambition

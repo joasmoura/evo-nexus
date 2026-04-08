@@ -3,15 +3,15 @@ name: sage-strategy-digest
 description: "Generate weekly strategy digest consolidating financial, product, community, and market data into strategic insights. Use when user says 'strategy digest', 'digest estratégico', 'resumo estratégico da semana', 'como tá a empresa', or as part of the weekly strategy review routine."
 ---
 
-# Strategy Digest — Resumo Estratégico Semanal
+# Strategy Digest — Weekly Strategic Summary
 
-Rotina semanal que consolida dados de todas as áreas numa visão estratégica pra tomada de decisão.
+Weekly routine that consolidates data from all areas into a strategic view for decision-making.
 
 **Always respond in English.**
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Coletar dados de cada área
+### Step 1 — Collect data de cada área
 
 **Financeiro:**
 - Consultar `/int-stripe` — MRR atual, variação, novas assinaturas, churn, reembolsos
@@ -33,7 +33,7 @@ Rotina semanal que consolida dados de todas as áreas numa visão estratégica p
 **Tendências:**
 - Ler último trends report em `01 Daily Logs/`
 
-### Passo 2 — Analisar estrategicamente
+### Step 2 — Analyze estrategicamente
 
 Cruzar os dados e responder:
 1. **Saúde do negócio** — caixa, receita, runway. Estamos seguros?
@@ -43,9 +43,9 @@ Cruzar os dados e responder:
 5. **Riscos** — o que pode dar errado nas próximas 2-4 semanas?
 6. **Oportunidades** — o que devemos considerar fazer?
 
-### Passo 3 — Gerar digest (HTML + MD)
+### Step 3 — Generate digest (HTML + MD)
 
-**HTML:** Ler o template em `.claude/templates/html/strategy-digest.html`, preencher todos os `{{PLACEHOLDER}}` com os dados coletados e salvar em `09 Estrategia/digests/[C] YYYY-WXX-strategy-digest.html`. Criar o diretório se não existir.
+**HTML:** Read the template at `.claude/templates/html/strategy-digest.html`, preencher todos os `{{PLACEHOLDER}}` com os dados coletados e salvar em `09 Estrategia/digests/[C] YYYY-WXX-strategy-digest.html`. Create the directory if it does not exist.
 
 **MD:** Também salvar versão markdown em `09 Estrategia/digests/[C] YYYY-WXX-strategy-digest.md` com o seguinte formato:
 
@@ -87,15 +87,15 @@ Cruzar os dados e responder:
 {Uma frase: o que o responsável deveria priorizar baseado em tudo acima}
 ```
 
-### Passo 4 — Resumo no terminal
+### Step 4 — Terminal summary
 
-Apresentar versão curta e direta.
+Present a short and direct version.
 
-## Regras
-- **Dados reais** — não inventar métricas. Se não tem o dado, dizer "sem dados"
-- **Opinião sinalizada** — quando é opinião vs dado, deixar claro
-- **Uma recomendação** — não dar 10 sugestões, dar 1 clara
-- **Conectar os pontos** — o valor do digest é cruzar áreas, não repetir relatórios individuais
+## Rules
+- **Real data** — do not fabricate metrics. If data is unavailable, say "no data"
+- **Opinions flagged** — when it is opinion vs data, make it clear
+- **One recommendation** — do not give 10 suggestions, give 1 clear one
+- **Connect the dots** — the value of the digest is crossing areas, not repeating individual reports
 
 
 ### Notify via Telegram

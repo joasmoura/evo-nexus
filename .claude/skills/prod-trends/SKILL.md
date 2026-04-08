@@ -3,13 +3,13 @@ name: prod-trends
 description: "Weekly trends analysis — compares community, GitHub, and financial metrics week-over-week to detect patterns, risks and opportunities. Use when user says 'análise de tendências', 'trends', 'como estão as métricas', 'comparativo semanal', 'evolução das métricas', or as part of the weekly review routine."
 ---
 
-# Análise de Tendências — Comparativo Semanal
+# Trends Analysis — Weekly Comparison
 
-Rotina que compara métricas de comunidade, GitHub e financeiro semana a semana pra detectar padrões, riscos e oportunidades.
+Routine that compares community, GitHub, and financial metrics week-over-week to detect patterns, risks, and opportunities.
 
 **Always respond in English.**
 
-## Fontes de dados
+## Data Sources
 
 ### 1. Comunidade (Discord)
 Ler relatórios anteriores em:
@@ -49,17 +49,17 @@ Métricas:
 Ler métricas do runner:
 - `ADWs/logs/metrics.json` — runs, success rate, avg time por rotina
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Coletar dados da semana atual
+### Step 1 — Collect the week's data atual
 
 Buscar os dados mais recentes de cada fonte (últimos 7 dias).
 
-### Passo 2 — Coletar dados da semana anterior
+### Step 2 — Collect the week's data anterior
 
 Buscar os dados de 7-14 dias atrás pra comparação. Se não existirem (primeira execução), marcar como "baseline" e pular comparativo.
 
-### Passo 3 — Calcular tendências
+### Step 3 — Calculate trends
 
 Para cada métrica, calcular:
 - Valor atual vs anterior
@@ -80,18 +80,18 @@ Para cada métrica, calcular:
 | MRR | estável ou ↑ | queda <5% | queda >5% |
 | Success rate ADWs | >90% | 70-90% | <70% |
 
-### Passo 4 — Detectar padrões
+### Step 4 — Detect patterns
 
-Analisar as últimas semanas (quantas tiver) e identificar:
+Analyze as últimas semanas (quantas tiver) e identificar:
 - **Tendências persistentes** — métrica subindo/descendo por 2+ semanas seguidas
 - **Correlações** — ex: aumento de issues no GitHub + aumento de perguntas no Discord = possível bug
 - **Anomalias** — pico ou queda incomum vs média
 - **Sazonalidade** — padrões que se repetem (ex: segunda tem mais atividade)
 
-### Passo 5 — Gerar relatório HTML
+### Step 5 — Generate HTML report
 
-Ler o template em `.claude/templates/html/trends-report.html`.
-Substituir os placeholders `{{...}}` com os dados reais.
+Read the template at `.claude/templates/html/trends-report.html`.
+Replace the placeholders `{{...}}` with the actual data.
 
 Classificação do health geral:
 - Todos 🟢 ou maioria 🟢: `healthy` — "Saudável"
@@ -100,7 +100,7 @@ Classificação do health geral:
 
 **OBRIGATÓRIO:** Sempre gerar o HTML primeiro. Ler o template, substituir os placeholders, e salvar o arquivo HTML completo. Isso vale inclusive na primeira execução (baseline) — mesmo sem comparativo, preencher o scorecard com os valores atuais e "—" no anterior.
 
-Salvar HTML em `01 Daily Logs/[C] YYYY-WXX-trends.html`.
+Save HTML em `01 Daily Logs/[C] YYYY-WXX-trends.html`.
 
 Depois, salvar também uma versão markdown resumida em `01 Daily Logs/[C] YYYY-WXX-trends.md`:
 
@@ -139,9 +139,9 @@ Depois, salvar também uma versão markdown resumida em `01 Daily Logs/[C] YYYY-
 2. {ação concreta}
 ```
 
-### Passo 6 — Salvar snapshot
+### Step 6 — Save snapshot
 
-Salvar um snapshot das métricas atuais em `memory/trends/YYYY-WXX.json` pra acumular histórico:
+Save um snapshot das métricas atuais em `memory/trends/YYYY-WXX.json` pra acumular histórico:
 
 ```json
 {
@@ -154,15 +154,15 @@ Salvar um snapshot das métricas atuais em `memory/trends/YYYY-WXX.json` pra acu
 }
 ```
 
-Criar `memory/trends/` se não existir.
+Criar `memory/trends/` if it does not exist.
 
-## Regras
+## Rules
 
-- **Primeira execução = baseline** — não tem comparativo, só coleta e salva snapshot
-- **Dados reais** — não inventar métricas, usar o que está disponível
-- **Se uma fonte não tem dados, pular** — não travar por falta de um relatório
-- **Foco em ação** — cada insight deve levar a uma recomendação concreta
-- **Não alarmar sem evidência** — 🔴 só quando métrica realmente indica risco
+- **First run = baseline** — no comparison, just collect and save snapshot
+- **Real data** — do not fabricate metrics, use what is available
+- **If a source has no data, skip** — do not block due to a missing report
+- **Focus on action** — each insight should lead to a concrete recommendation
+- **Do not alarm without evidence** — red only when the metric truly indicates risk
 
 
 ### Notify via Telegram

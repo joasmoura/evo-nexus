@@ -3,21 +3,21 @@ name: pulse-monthly
 description: "Monthly community report — aggregates Discord and WhatsApp activity for the full month: MAM, growth, sentiment trends, top contributors, product insights, docs gaps, and week-over-week evolution. Generates an HTML report using the Evolution brand. Use when user says 'relatório mensal comunidade', 'community monthly', 'como foi o mês na comunidade', 'monthly pulse', 'relatório mensal discord', or any reference to monthly community analysis."
 ---
 
-# Relatório Mensal da Comunidade
+# Monthly Community Report
 
-Rotina mensal que analisa toda a atividade do Discord e WhatsApp do mês e gera um relatório HTML completo com tendências, insights e recomendações.
+Monthly routine that analyzes all Discord and WhatsApp activity for the month and generates a complete HTML report with trends, insights, and recommendations.
 
 **Always respond in English.**
 
-## Fluxo
+## Workflow
 
-### Passo 1 — Determinar período
+### Step 1 — Determine period
 
 - Mês de referência: mês anterior ao atual (ex: se hoje é 01/04, analisar março)
 - Período: primeiro ao último dia do mês de referência
 - Dividir o mês em semanas (W1, W2, W3, W4/W5) para análise de tendência
 
-### Passo 2 — Coletar dados do Discord (30 dias)
+### Step 2 — Collect Discord data (30 dias)
 
 Usar a skill `/discord-get-messages` para buscar mensagens do mês nos canais principais.
 
@@ -29,7 +29,7 @@ Canais a monitorar:
 
 Para cada canal, buscar mensagens paginadas (100 por request) até cobrir o mês completo.
 
-### Passo 3 — Coletar dados do WhatsApp (30 dias)
+### Step 3 — Collect WhatsApp data (30 dias)
 
 Usar a skill `/int-whatsapp`:
 
@@ -39,15 +39,15 @@ python3 {project-root}/.claude/skills/int-whatsapp/scripts/whatsapp_client.py st
 python3 {project-root}/.claude/skills/int-whatsapp/scripts/whatsapp_client.py groups --start YYYY-MM-01 --end YYYY-MM-DD
 ```
 
-### Passo 4 — Calcular KPIs mensais
+### Step 4 — Calculate monthly KPIs
 
 1. **MAM (Monthly Active Members)**: membros únicos que enviaram mensagem no mês (Discord + WhatsApp)
 2. **Total Mensagens**: Discord + WhatsApp separados e somados
 3. **Novos Membros**: entradas em `🆕・new-members` do Discord no mês
 4. **Taxa de Resolução**: perguntas respondidas / total em #help (meta: >80%)
-5. **Comparativo**: comparar todos os KPIs com o mês anterior (ler relatório anterior se existir em `03 Comunidade/reports/monthly/`)
+5. **Comparison**: comparar todos os KPIs com o mês anterior (ler relatório anterior se existir em `03 Comunidade/reports/monthly/`)
 
-### Passo 5 — Evolução semanal
+### Step 5 — Weekly evolution
 
 Para cada semana do mês, calcular:
 - Mensagens
@@ -58,7 +58,7 @@ Para cada semana do mês, calcular:
 
 Apresentar em tabela para visualizar tendência ao longo do mês.
 
-### Passo 6 — Métricas por plataforma
+### Step 6 — Metrics by platform
 
 **Discord:**
 - Total de mensagens, membros ativos, tickets suporte, sentimento
@@ -68,33 +68,33 @@ Apresentar em tabela para visualizar tendência ao longo do mês.
 - Total de mensagens, grupos ativos, participantes únicos, sentimento
 - Grupo mais ativo
 
-### Passo 7 — Top contribuidores
+### Step 7 — Top contributors
 
 Rankear por volume de mensagens + respostas dadas em #help:
 - Top 10 membros mais ativos
 - Plataforma principal (Discord/WhatsApp)
 - Destaque (helper, novo membro ativo, líder de tópico)
 
-### Passo 8 — Tópicos do mês
+### Step 8 — Month's topics
 
 Agrupar todas as discussões por tema:
 - Top 10 tópicos mais discutidos
 - Frequência, sentimento por tópico
 - Fontes (Discord, WhatsApp, ou ambos)
 
-### Passo 9 — Insights para produto
+### Step 9 — Product insights
 
 1. **Features solicitadas**: pedidos espontâneos de funcionalidades (com frequência)
 2. **Bugs reportados**: problemas técnicos mencionados (com frequência)
 3. **Docs gaps**: perguntas recorrentes cuja resposta deveria estar na documentação
 
-### Passo 10 — Tendência de sentimento
+### Step 10 — Sentiment trend
 
 Para cada semana do mês:
 - % positivo, % neutro, % negativo
 - Tendência: melhorando, estável, piorando
 
-### Passo 11 — Análise e recomendações
+### Step 11 — Analysis and recommendations
 
 **Análise** (3-5 bullets):
 - Crescimento ou retração da comunidade
@@ -109,9 +109,9 @@ Para cada semana do mês:
 - Features a priorizar baseado no feedback
 - Membros a reconhecer/engajar
 
-### Passo 12 — Gerar relatório HTML
+### Step 12 — Generate HTML report
 
-Ler o template em `.claude/templates/html/community-monthly-report.html` e substituir TODOS os `{{PLACEHOLDER}}`.
+Read the template at `.claude/templates/html/community-monthly-report.html` e substituir TODOS os `{{PLACEHOLDER}}`.
 
 Para rows dinâmicas, usar o padrão das outras skills pulse:
 
@@ -127,7 +127,7 @@ Para rows dinâmicas, usar o padrão das outras skills pulse:
 </tr>
 ```
 
-**Top contribuidores:**
+**Top contributors:**
 ```html
 <tr>
   <td>Nome</td>
@@ -158,16 +158,16 @@ Para rows dinâmicas, usar o padrão das outras skills pulse:
 </tr>
 ```
 
-### Passo 13 — Salvar
+### Step 13 — Save
 
-Salvar em:
+Save em:
 ```
 03 Comunidade/reports/monthly/[C] YYYY-MM-community-monthly.html
 ```
 
-Criar o diretório `03 Comunidade/reports/monthly/` se não existir.
+Create the directory `03 Comunidade/reports/monthly/` if it does not exist.
 
-### Passo 14 — Confirmar
+### Step 14 — Confirm
 
 ```
 ## Community Monthly gerado
