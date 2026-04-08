@@ -7,6 +7,7 @@ Usage: python setup.py  (or: make setup)
 
 import os
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -16,6 +17,7 @@ WORKSPACE = Path(__file__).parent
 GREEN = "\033[92m"
 CYAN = "\033[96m"
 YELLOW = "\033[93m"
+RED = "\033[91m"
 DIM = "\033[2m"
 BOLD = "\033[1m"
 RESET = "\033[0m"
@@ -27,6 +29,72 @@ def banner():
   ║   {BOLD}OpenClaude — Setup Wizard{RESET}{GREEN}     ║
   ╚══════════════════════════════════╝{RESET}
 """)
+
+
+def check_prerequisites():
+    """Check that required tools are installed before proceeding."""
+    errors = []
+
+    # Claude Code CLI
+    try:
+        result = subprocess.run(["claude", "--version"], capture_output=True, text=True, timeout=5)
+        if result.returncode == 0:
+            version = result.stdout.strip()
+            print(f"  {GREEN}✓{RESET} Claude Code CLI: {DIM}{version}{RESET}")
+        else:
+            errors.append("claude")
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        errors.append("claude")
+
+    # Python / uv
+    try:
+        result = subprocess.run(["uv", "--version"], capture_output=True, text=True, timeout=5)
+        if result.returncode == 0:
+            version = result.stdout.strip()
+            print(f"  {GREEN}✓{RESET} uv: {DIM}{version}{RESET}")
+        else:
+            errors.append("uv")
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        errors.append("uv")
+
+    # Node.js
+    try:
+        result = subprocess.run(["node", "--version"], capture_output=True, text=True, timeout=5)
+        if result.returncode == 0:
+            version = result.stdout.strip()
+            print(f"  {GREEN}✓{RESET} Node.js: {DIM}{version}{RESET}")
+        else:
+            errors.append("node")
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        errors.append("node")
+
+    # npm
+    try:
+        result = subprocess.run(["npm", "--version"], capture_output=True, text=True, timeout=5)
+        if result.returncode == 0:
+            print(f"  {GREEN}✓{RESET} npm: {DIM}v{result.stdout.strip()}{RESET}")
+        else:
+            errors.append("npm")
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        errors.append("npm")
+
+    print()
+
+    if errors:
+        print(f"  {RED}✗ Missing required tools:{RESET}")
+        if "claude" in errors:
+            print(f"    {RED}•{RESET} Claude Code CLI — install from {BOLD}https://claude.ai/download{RESET}")
+            print(f"      {DIM}npm install -g @anthropic-ai/claude-code{RESET}")
+        if "uv" in errors:
+            print(f"    {RED}•{RESET} uv (Python package manager) — {BOLD}https://docs.astral.sh/uv/{RESET}")
+            print(f"      {DIM}curl -LsSf https://astral.sh/uv/install.sh | sh{RESET}")
+        if "node" in errors or "npm" in errors:
+            print(f"    {RED}•{RESET} Node.js 18+ — {BOLD}https://nodejs.org{RESET}")
+        print()
+        print(f"  {YELLOW}Install the missing tools and run setup again.{RESET}")
+        sys.exit(1)
+
+    return True
 
 
 def ask(prompt: str, default: str = "") -> str:
@@ -241,8 +309,12 @@ def create_folders(config: dict):
 def main():
     banner()
 
+    # Prerequisites check
+    print(f"  {BOLD}Checking prerequisites...{RESET}")
+    check_prerequisites()
+
     # Step 1 — Who are you?
-    print(f"  {BOLD}Step 1/5 — Who are you?{RESET}")
+    print(f"  {BOLD}Step 1/4 — Who are you?{RESET}")
     owner_name = ask("Your name", "")
     company_name = ask("Company name", "")
     timezone = ask("Timezone", "America/Sao_Paulo")
@@ -250,19 +322,19 @@ def main():
     print()
 
     # Step 2 — Agents
-    print(f"  {BOLD}Step 2/5 — Which agents do you want?{RESET}")
+    print(f"  {BOLD}Step 2/4 — Which agents do you want?{RESET}")
     default_agents = ["ops", "finance", "projects", "community"]
     agents = ask_multi("Select agents:", AGENTS, default_agents)
     print()
 
     # Step 3 — Integrations
-    print(f"  {BOLD}Step 3/5 — Integrations{RESET}")
+    print(f"  {BOLD}Step 3/4 — Integrations{RESET}")
     print(f"  {DIM}Configure API keys in .env after setup.{RESET}")
     integrations = ask_multi("Select integrations:", INTEGRATIONS, [])
     print()
 
     # Step 4 — Dashboard
-    print(f"  {BOLD}Step 4/5 — Dashboard{RESET}")
+    print(f"  {BOLD}Step 4/4 — Dashboard{RESET}")
     enable_dashboard = ask_bool("Enable web dashboard?", True)
     dashboard_port = int(ask("Dashboard port", "8080")) if enable_dashboard else 8080
     print()
@@ -283,7 +355,7 @@ def main():
     }
 
     # Step 5 — Generate
-    print(f"  {BOLD}Step 5/5 — Creating workspace...{RESET}")
+    print(f"  {BOLD}Creating workspace... — Creating workspace...{RESET}")
 
     # workspace.yaml
     config_dir = WORKSPACE / "config"

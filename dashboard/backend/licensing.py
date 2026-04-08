@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 
 logger = logging.getLogger("licensing")
 
-LICENSING_SERVER = "https://licensing.evolutionfoundation.com.br"
+LICENSING_SERVER = "https://license.evolutionfoundation.com.br"
 PRODUCT = "open-claude"
 VERSION = "0.1.0"
 HEARTBEAT_INTERVAL = 1800  # 30 minutes
