@@ -35,12 +35,12 @@ linkedin_client.py summary                     # Summary of all accounts
 
 ## Available scopes
 
-| Scope | Status | Produto LinkedIn |
+| Scope | Status | LinkedIn Product |
 |-------|--------|-----------------|
-| `openid profile email` | ✅ Ativo | Sign In with OpenID Connect |
-| `w_member_social` | ✅ Ativo | Share on LinkedIn |
-| `r_organization_social` | Pendente | Advertising API (request form) |
-| `r_organization_admin` | Pendente | Advertising API (request form) |
+| `openid profile email` | Active | Sign In with OpenID Connect |
+| `w_member_social` | Active | Share on LinkedIn |
+| `r_organization_social` | Pending | Advertising API (request form) |
+| `r_organization_admin` | Pending | Advertising API (request form) |
 
 ## Current limitations
 - **Posts:** Reading posts requires an additional scope not available in the current tier

@@ -58,5 +58,5 @@ instagram_client.py summary
 - Publishing frequency
 
 ## Rate Limits
-- Endpoints Instagram Platform: `4800 × impressões` por 24h
+- Instagram Platform endpoints: `4800 × impressions` per 24h
 - Business Discovery / Hashtag: 200 calls/hour/user
