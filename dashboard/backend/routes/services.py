@@ -100,7 +100,7 @@ SCHEDULER_LOG = f"{WORKSPACE_STR}/ADWs/logs/scheduler.log"
 
 START_CMDS = {
     "scheduler": f"cd {WORKSPACE_STR} && nohup uv run python -u scheduler.py >> {SCHEDULER_LOG} 2>&1 &",
-    "telegram": f"cd {WORKSPACE_STR} && screen -dmS telegram -L -Logfile {TELEGRAM_LOG} claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions",
+    "telegram": f"cd {WORKSPACE_STR} && screen -dmS telegram claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions",
 }
 
 STOP_CMDS = {
