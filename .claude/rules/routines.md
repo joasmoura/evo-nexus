@@ -1,6 +1,6 @@
 # Automated Routines
 
-Managed by the scheduler (`make scheduler`) — see `ROTINAS.md` for full details.
+Managed by the scheduler (`make scheduler`) — see `ROUTINES.md` for full details.
 
 ## Daily
 
@@ -32,6 +32,7 @@ Managed by the scheduler (`make scheduler`) — see `ROTINAS.md` for full detail
 | Mon/Wed/Fri 09:00 | Linear Review | `make linear` | @atlas |
 | Mon/Wed/Fri 09:15 | GitHub Review | `make github` | @atlas |
 | Monday 09:30 | Community Weekly | `make community-week` | @pulse |
+| Sunday 09:00 | Memory Lint | `make memory-lint` | @clawdia |
 | Sunday 10:00 | Health Check-in | `make health` | @kai |
 
 ## Monthly (Day 1)

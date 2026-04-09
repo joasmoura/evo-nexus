@@ -9,6 +9,7 @@ ADWs/routines/
   good_morning.py       # Core (ships with the repo, hardcoded in scheduler.py)
   end_of_day.py         # Core
   memory_sync.py        # Core
+  memory_lint.py        # Core
   weekly_review.py      # Core
   examples/             # Example routines (tracked with the repo)
     community_daily.py
@@ -19,7 +20,9 @@ ADWs/routines/
     ...
 ```
 
-**Core routines** ship with the repo and cover the essential daily loop: good_morning, end_of_day, memory_sync, and weekly_review. Their schedules are hardcoded in `scheduler.py` — they do NOT come from `config/routines.yaml`.
+**Core routines** ship with the repo and cover the essential daily loop: good_morning, end_of_day, memory_sync, memory_lint, and weekly_review. Their schedules are hardcoded in `scheduler.py` — they do NOT come from `config/routines.yaml`. See [Core Routines](core-routines.md) for a detailed explanation of each one and why they matter.
+
+> **Note:** Memory maintenance follows the LLM Wiki pattern. The `memory_sync` routine (daily) handles ingest with cross-reference propagation (updating related memory files when one changes). The `memory_lint` routine (weekly) performs health checks: detecting contradictions, stale data, orphan files, and coverage gaps. Both routines update `memory/index.md` (catalog) and `memory/log.md` (operation log).
 
 **Example routines** live in `ADWs/routines/examples/` and are tracked with the repo. These are reference implementations for common integrations (Discord, Stripe, YouTube, etc).
 

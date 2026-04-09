@@ -52,6 +52,7 @@ def setup_schedule():
     schedule.every().day.at("21:00").do(run_adw, "End of Day", "end_of_day.py")
     schedule.every().day.at("21:15").do(run_adw, "Memory Sync", "memory_sync.py")
     schedule.every().friday.at("08:00").do(run_adw, "Weekly Review", "weekly_review.py")
+    schedule.every().sunday.at("09:00").do(run_adw, "Memory Lint", "memory_lint.py")
 
     # ── Custom routines (from config/routines.yaml if exists) ──
     _load_custom_routines(schedule)

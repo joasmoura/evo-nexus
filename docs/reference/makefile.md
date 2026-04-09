@@ -27,6 +27,7 @@ These ship with the repo and run the essential daily loop:
 make morning         # Morning briefing -- agenda, emails, tasks (@clawdia)
 make eod             # End of day -- memory, logs, learnings (@clawdia)
 make memory          # Memory sync -- consolidate agent memory (@clawdia)
+make memory-lint     # Memory health check -- contradictions, gaps, stale data (@clawdia)
 make weekly          # Full weekly review (@clawdia)
 ```
 

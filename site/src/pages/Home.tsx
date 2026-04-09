@@ -187,7 +187,7 @@ export default function Home() {
                 { value: "17,000+", label: "Community members" },
                 { value: "9", label: "AI Agents" },
                 { value: "67", label: "Skills" },
-                { value: "19", label: "Integrations" },
+                { value: "17", label: "Integrations" },
               ].map((stat, i) => (
                 <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border text-sm">
                   <span className="font-bold text-primary">{stat.value}</span>
@@ -282,7 +282,7 @@ export default function Home() {
                 { icon: BrainCircuit, title: "67 Skills", desc: "Organized by domain: financial, social, marketing, integrations, productivity" },
                 { icon: Clock, title: "Automated Routines", desc: "Morning briefing to monthly close, running on schedule automatically" },
                 { icon: LayoutDashboard, title: "Web Dashboard", desc: "React + Flask with auth, roles, terminal, reports, service management" },
-                { icon: Workflow, title: "19 Integrations", desc: "Gmail, Calendar, GitHub, Linear, Discord, Stripe, Evolution API, Evolution Go, Evo CRM, and more" },
+                { icon: Workflow, title: "17 Integrations", desc: "Gmail, Calendar, GitHub, Linear, Discord, Stripe, Evolution API, Evolution Go, Evo CRM, and more" },
                 { icon: Database, title: "Persistent Memory", desc: "Two-tier system that remembers context across conversations and sessions" },
                 { icon: Activity, title: "Full Observability", desc: "Token usage, cost tracking, JSONL logs per routine and agent" },
                 { icon: Zap, title: "Setup in 2 Minutes", desc: "make setup \u2192 make dashboard-app \u2192 done. Everything configures itself." },

@@ -47,4 +47,4 @@
 ## HTML Templates
 
 All in `.claude/templates/html/`, Evolution dark theme (green `#00FFA7`, Inter font).
-17 templates available — see `ROTINAS.md` for full template-to-routine mapping.
+17 templates available — see `ROUTINES.md` for full template-to-routine mapping.

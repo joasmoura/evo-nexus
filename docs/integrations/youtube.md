@@ -9,7 +9,7 @@ YouTube Data API v3 provides channel statistics, video metrics, and engagement d
 1. Go to [Google Cloud Console](https://console.cloud.google.com)
 2. Enable the **YouTube Data API v3**
 3. Create an **OAuth 2.0 Client ID** (Web application)
-4. Set redirect URI to `http://localhost:8765/callback/youtube`
+4. Under **Authorized redirect URIs**, add: `http://localhost:8765/callback/youtube`
 
 ### 2. Configure .env
 

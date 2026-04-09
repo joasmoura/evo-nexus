@@ -10,6 +10,9 @@ Instagram Graph API provides profile statistics, post engagement, reach, and imp
 2. Create a new app (type: Business)
 3. Navigate to **Settings > Basic**
 4. Copy your **App ID** and **App Secret**
+5. Go to **Facebook Login > Settings** and add the redirect URI:
+   - `http://localhost:8765/callback/instagram`
+   - If using ngrok, also add your ngrok URL: `https://your-id.ngrok.io/callback/instagram`
 
 ### 2. Configure .env
 

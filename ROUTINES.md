@@ -18,11 +18,19 @@ Routines are automated workflows that run on a schedule via the ADW Runner.
 | Memory Sync | `memory_sync.py` | @clawdia | Daily 21:15 |
 | Weekly Review | `weekly_review.py` | @clawdia | Friday 08:00 |
 
+> **Memory Sync** follows the LLM Wiki pattern: extracts knowledge from daily logs, meetings, and git changes, then **propagates updates** across related memory files (e.g., a role change updates people/, glossary.md, and CLAUDE.md). Updates `memory/index.md` (catalog) and `memory/log.md` (operation log) after each run.
+
 ## Custom Routines
 
 Custom routines live in `ADWs/routines/custom/` (gitignored) and are scheduled via `config/routines.yaml` (also gitignored).
 
 To create a custom routine, say **"create a routine"** and the `create-routine` skill will guide you.
+
+Notable custom routines shipped as examples:
+
+| Routine | Script | Agent | Schedule | Description |
+|---------|--------|-------|----------|-------------|
+| Memory Lint | `memory_lint.py` | @clawdia | Sunday 09:00 | Health check — detects contradictions, stale data, orphan files, coverage gaps, missing cross-references |
 
 ### config/routines.yaml
 
@@ -63,6 +71,7 @@ monthly:
 make morning    # Good Morning
 make eod        # End of Day
 make memory     # Memory Sync
+make memory-lint # Memory Lint (health check)
 make weekly     # Weekly Review
 make help       # All commands
 ```

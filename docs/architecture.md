@@ -84,11 +84,18 @@ Routines are split into two tiers:
 
 ### Memory
 
-Two-tier persistent memory:
+Two-tier persistent memory following the **LLM Wiki pattern** (ingest → query → lint):
 
 1. **CLAUDE.md** — Hot cache loaded at every session start. Contains key context about the user, company, active projects, and preferences.
 2. **memory/** — Global memory directory with typed files (people, projects, glossary, trends). Agents read these as needed.
+   - `index.md` — Centralized catalog of all memory files by category (auto-updated by memory-sync)
+   - `log.md` — Append-only chronological record of all memory operations (ingest, lint, updates)
 3. **agent-memory/** — Per-agent memory that persists between sessions.
+
+Three operations maintain the knowledge base:
+- **Ingest** (daily, via memory-sync) — Extracts new knowledge from daily logs, meetings, and git changes. Propagates updates across related memory files (e.g., a person's role change updates their people/ file, glossary.md, and CLAUDE.md).
+- **Query** (during conversations) — Complex syntheses can be filed back as new memory entries, so knowledge compounds through use.
+- **Lint** (weekly, via memory-lint) — Health check that detects contradictions, stale claims, orphan files, coverage gaps, and missing cross-references.
 
 ### Dashboard (`dashboard/`)
 

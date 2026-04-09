@@ -28,8 +28,6 @@ def get_routines_md():
     # Try new name first, fallback to old
     content = safe_read(WORKSPACE / "ROUTINES.md")
     if content is None:
-        content = safe_read(WORKSPACE / "ROTINAS.md")
-    if content is None:
         abort(404, description="ROUTINES.md not found")
     return Response(content, mimetype="text/markdown")
 

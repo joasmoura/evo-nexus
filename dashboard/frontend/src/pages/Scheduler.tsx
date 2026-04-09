@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { Play, Square, RefreshCw, Terminal, X } from 'lucide-react'
+import { Play, Square, RefreshCw, Terminal, X, Clock } from 'lucide-react'
 import { api } from '../lib/api'
 import StatusDot from '../components/StatusDot'
 
@@ -49,7 +49,6 @@ export default function Scheduler() {
     setActionLoading(serviceId)
     try {
       await api.post(`/services/${serviceId}/${action}`)
-      // Wait a bit for process to start/stop
       setTimeout(() => {
         fetchData()
         setActionLoading(null)
@@ -63,7 +62,6 @@ export default function Scheduler() {
     setTerminalService(serviceId)
     setTerminalLines([])
     fetchLogs(serviceId)
-    // Poll every 3 seconds
     if (pollingRef.current) clearInterval(pollingRef.current)
     pollingRef.current = setInterval(() => fetchLogs(serviceId), 3000)
   }
@@ -82,7 +80,6 @@ export default function Scheduler() {
     try {
       const data = await api.get(`/services/${serviceId}/logs`)
       setTerminalLines(data?.lines || [])
-      // Auto-scroll to bottom
       setTimeout(() => {
         if (terminalRef.current) {
           terminalRef.current.scrollTop = terminalRef.current.scrollHeight
@@ -94,7 +91,6 @@ export default function Scheduler() {
     setTerminalLoading(false)
   }
 
-  // Cleanup polling on unmount
   useEffect(() => {
     return () => { if (pollingRef.current) clearInterval(pollingRef.current) }
   }, [])
@@ -103,9 +99,9 @@ export default function Scheduler() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-[#F9FAFB]">Services & Scheduler</h1>
+          <h1 className="text-2xl font-bold text-[#e6edf3]">Services & Scheduler</h1>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-3">
           {[...Array(3)].map((_, i) => <div key={i} className="skeleton h-24 rounded-xl" />)}
         </div>
       </div>
@@ -115,42 +111,50 @@ export default function Scheduler() {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-[#F9FAFB]">Services & Scheduler</h1>
-          <p className="text-[#667085] mt-1">Background services and scheduled routines</p>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#161b22] border border-[#21262d] flex items-center justify-center">
+            <Clock size={20} className="text-[#00FFA7]" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-[#e6edf3]">Services & Scheduler</h1>
+            <p className="text-[#667085] mt-0.5 text-sm">Background services and scheduled routines</p>
+          </div>
         </div>
         <button
           onClick={() => { setLoading(true); fetchData() }}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 text-[#D0D5DD] hover:text-[#00FFA7] transition-colors"
+          className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#21262d] bg-[#161b22] text-[#667085] hover:text-[#00FFA7] hover:border-[#00FFA7]/30 transition-colors"
         >
           <RefreshCw size={16} /> Refresh
         </button>
       </div>
 
       {/* Local Services */}
-      <h2 className="text-lg font-semibold text-[#F9FAFB] mb-4">Background Services</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+      <h2 className="text-base font-semibold text-[#e6edf3] mb-3">Background Services</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
         {services.filter(s => !(s as any).category).map((svc) => (
-          <div key={svc.name} className="bg-[#182230] border border-[#344054] rounded-xl p-5 hover:border-[#00FFA7] transition-colors">
+          <div key={svc.name} className="bg-[#161b22] border border-[#21262d] rounded-xl p-5 hover:border-[#00FFA7]/30 transition-all">
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
                 <StatusDot status={svc.running ? 'ok' : 'error'} />
-                <h3 className="font-semibold text-[#F9FAFB]">{svc.name}</h3>
+                <h3 className="font-semibold text-[#e6edf3] text-sm">{svc.name}</h3>
               </div>
-              <span className={`text-xs px-2 py-0.5 rounded ${
-                svc.running ? 'bg-[#00FFA7]/10 text-[#00FFA7]' : 'bg-red-500/10 text-red-400'
+              <span className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-0.5 rounded-full ${
+                svc.running
+                  ? 'bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20'
+                  : 'bg-red-500/10 text-red-400 border border-red-500/20'
               }`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${svc.running ? 'bg-[#00FFA7] animate-pulse' : 'bg-red-400'}`} />
                 {svc.running ? 'Running' : 'Stopped'}
               </span>
             </div>
             <p className="text-xs text-[#667085] mb-4">{svc.description}</p>
             <div className="flex items-center justify-between gap-2">
-              <code className="text-xs text-[#D0D5DD] bg-black/20 px-2 py-1 rounded">{svc.command}</code>
-              <div className="flex items-center gap-2">
+              <code className="text-[11px] text-[#e6edf3] bg-[#0d1117] border border-[#21262d] px-2 py-1 rounded font-mono truncate">{svc.command}</code>
+              <div className="flex items-center gap-2 shrink-0">
                 {svc.running && svc.id !== 'dashboard' && (
                   <button
                     onClick={() => openTerminal(svc.id)}
-                    className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg bg-white/5 text-[#D0D5DD] hover:text-[#00FFA7] hover:bg-white/10 transition-colors"
+                    className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg border border-[#21262d] bg-[#0d1117] text-[#667085] hover:text-[#00FFA7] hover:border-[#00FFA7]/30 transition-colors"
                   >
                     <Terminal size={12} /> Logs
                   </button>
@@ -159,10 +163,10 @@ export default function Scheduler() {
                 <button
                   onClick={() => handleAction(svc.id, svc.running ? 'stop' : 'start')}
                   disabled={actionLoading === svc.id}
-                  className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg transition-colors ${
+                  className={`flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
                     svc.running
-                      ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20'
-                      : 'bg-[#00FFA7]/10 text-[#00FFA7] hover:bg-[#00FFA7]/20'
+                      ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border-red-500/20'
+                      : 'bg-[#00FFA7]/10 text-[#00FFA7] hover:bg-[#00FFA7]/20 border-[#00FFA7]/20'
                   } ${actionLoading === svc.id ? 'opacity-50' : ''}`}
                 >
                   {actionLoading === svc.id ? (
@@ -183,11 +187,11 @@ export default function Scheduler() {
       {/* Terminal Viewer */}
       {terminalService && (
         <div className="mb-10">
-          <div className="bg-[#0a0f1a] border border-[#344054] rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 bg-black/30 border-b border-[#344054]">
+          <div className="bg-[#0d1117] border border-[#21262d] rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 bg-black/30 border-b border-[#21262d]">
               <div className="flex items-center gap-2">
                 <Terminal size={14} className="text-[#00FFA7]" />
-                <span className="text-sm font-medium text-[#F9FAFB]">
+                <span className="text-sm font-medium text-[#e6edf3]">
                   {services.find(s => s.id === terminalService)?.name || terminalService} — Logs
                 </span>
                 {terminalLoading && <RefreshCw size={12} className="text-[#667085] animate-spin" />}
@@ -195,14 +199,14 @@ export default function Scheduler() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => fetchLogs(terminalService)}
-                  className="p-1.5 rounded hover:bg-white/10 text-[#667085] hover:text-[#D0D5DD] transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-white/5 text-[#667085] hover:text-[#e6edf3] transition-colors"
                   title="Refresh"
                 >
                   <RefreshCw size={14} />
                 </button>
                 <button
                   onClick={closeTerminal}
-                  className="p-1.5 rounded hover:bg-white/10 text-[#667085] hover:text-red-400 transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-white/5 text-[#667085] hover:text-red-400 transition-colors"
                   title="Close"
                 >
                   <X size={14} />
@@ -211,12 +215,12 @@ export default function Scheduler() {
             </div>
             <div
               ref={terminalRef}
-              className="p-4 font-mono text-xs leading-5 text-[#D0D5DD] overflow-y-auto"
+              className="p-4 font-mono text-xs leading-5 text-[#e6edf3] overflow-y-auto"
               style={{ maxHeight: '400px', minHeight: '200px' }}
             >
               {terminalLines.length > 0 ? (
                 terminalLines.map((line, i) => (
-                  <div key={i} className="whitespace-pre-wrap hover:bg-white/5 px-1 rounded">
+                  <div key={i} className="whitespace-pre-wrap hover:bg-white/[0.03] px-1 rounded">
                     {line}
                   </div>
                 ))
@@ -224,7 +228,7 @@ export default function Scheduler() {
                 <div className="text-[#667085] italic">No output yet. Waiting for logs...</div>
               )}
             </div>
-            <div className="px-4 py-2 bg-black/20 border-t border-[#344054] text-xs text-[#667085]">
+            <div className="px-4 py-2 bg-black/20 border-t border-[#21262d] text-[10px] text-[#667085]">
               Auto-refresh every 3s — Showing last 100 lines
             </div>
           </div>
@@ -232,43 +236,46 @@ export default function Scheduler() {
       )}
 
       {/* Scheduled Tasks */}
-      <h2 className="text-lg font-semibold text-[#F9FAFB] mb-4">
-        Scheduled Routines <span className="text-[#667085] text-sm font-normal">({tasks.length})</span>
-      </h2>
-      <div className="bg-[#182230] border border-[#344054] rounded-xl overflow-hidden">
+      <div className="flex items-center gap-3 mb-3">
+        <h2 className="text-base font-semibold text-[#e6edf3]">Scheduled Routines</h2>
+        <span className="text-[11px] font-medium text-[#667085] bg-[#21262d] px-2 py-0.5 rounded-full">{tasks.length}</span>
+      </div>
+      <div className="bg-[#161b22] border border-[#21262d] rounded-xl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-[#667085] text-xs uppercase tracking-wider bg-black/20">
-              <th className="text-left p-4">Task</th>
-              <th className="text-left p-4">Schedule</th>
-              <th className="text-left p-4">Agent</th>
-              <th className="text-left p-4">Script</th>
+            <tr className="text-[#667085] text-xs uppercase tracking-wider bg-[#0d1117]/50 border-b border-[#21262d]">
+              <th className="text-left p-4 font-medium">Task</th>
+              <th className="text-left p-4 font-medium">Schedule</th>
+              <th className="text-left p-4 font-medium">Agent</th>
+              <th className="text-left p-4 font-medium">Script</th>
             </tr>
           </thead>
           <tbody>
             {tasks.map((task, i) => (
-              <tr key={i} className="border-t border-[#344054]/50 hover:bg-white/5 transition-colors">
-                <td className="p-4 text-[#F9FAFB] font-medium">
-                  {task.name}
-                  {task.custom ? (
-                    <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-[#344054] text-[#667085]">custom</span>
-                  ) : (
-                    <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-[#00FFA7]/10 text-[#00FFA7]">core</span>
-                  )}
+              <tr key={i} className="border-t border-[#21262d]/50 hover:bg-white/[0.02] transition-colors">
+                <td className="p-4 text-[#e6edf3] font-medium">
+                  <div className="flex items-center gap-2">
+                    {task.name}
+                    {task.custom ? (
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full border bg-[#21262d]/60 border-[#21262d] text-[#667085]">custom</span>
+                    ) : (
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full border bg-[#00FFA7]/8 border-[#00FFA7]/20 text-[#00FFA7]">core</span>
+                    )}
+                  </div>
                 </td>
                 <td className="p-4">
-                  <code className="text-xs bg-black/20 px-2 py-1 rounded text-[#D0D5DD]">{task.schedule}</code>
+                  <code className="text-[11px] bg-[#0d1117] border border-[#21262d] px-2 py-1 rounded text-[#e6edf3] font-mono">{task.schedule}</code>
                 </td>
                 <td className="p-4">
                   {task.agent ? (
-                    <span className="text-xs px-2 py-0.5 rounded bg-[#00FFA7]/10 text-[#00FFA7]">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#00FFA7]/8 border border-[#00FFA7]/20 text-[#00FFA7]">
                       @{task.agent}
                     </span>
                   ) : (
-                    <span className="text-[#667085]">—</span>
+                    <span className="text-[#667085]">--</span>
                   )}
                 </td>
-                <td className="p-4 text-[#667085] text-xs">{task.script}</td>
+                <td className="p-4 text-[#667085] text-xs font-mono">{task.script}</td>
               </tr>
             ))}
           </tbody>

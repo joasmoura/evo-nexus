@@ -48,9 +48,9 @@ It turns a single Claude Code installation into a team of 9 specialized agents �
 - **~67 Skills** — organized by domain prefix (`social-`, `fin-`, `int-`, `prod-`, `mkt-`, `gog-`, `obs-`, `discord-`, `pulse-`, `sage-`)
 - **7 Core + 20 Custom Routines** — daily, weekly, and monthly ADWs managed by a scheduler (core routines ship with the repo; custom routines are user-created and gitignored)
 - **Web Dashboard** — React + Flask app with auth, roles, web terminal, service management
-- **19 Integrations** — Google Calendar, Gmail, Linear, GitHub, Discord, Telegram, Stripe, Omie, Fathom, Todoist, YouTube, Instagram, LinkedIn, Evolution API, Evolution Go, Evo CRM, and more
+- **17 Integrations** — Google Calendar, Gmail, Linear, GitHub, Discord, Telegram, Stripe, Omie, Fathom, Todoist, YouTube, Instagram, LinkedIn, Evolution API, Evolution Go, Evo CRM, and more
 - **2 core + custom HTML report templates** — dark-themed dashboards for every domain
-- **Persistent Memory** — two-tier system (CLAUDE.md + memory/) across sessions
+- **Persistent Memory** — two-tier system (CLAUDE.md + memory/) with LLM Wiki pattern: ingest propagation, weekly lint, centralized index, and operation log
 - **Knowledge Base** — optional semantic search via [MemPalace](https://github.com/milla-jovovich/mempalace) (local ChromaDB vectors, one-click install)
 - **Full Observability** — JSONL logs, execution metrics, cost tracking per routine
 
@@ -305,6 +305,7 @@ make triage          # Run email triage
 make community       # Run community pulse
 make fin-pulse       # Run financial pulse
 make eod             # Run end-of-day consolidation
+make memory-lint     # Run memory health check (contradictions, stale data, gaps)
 make weekly          # Run weekly review
 
 # Observability

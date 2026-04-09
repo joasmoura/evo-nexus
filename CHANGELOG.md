@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.1] - 2026-04-09
+
+### Added
+- **Core routines documentation** (`docs/routines/core-routines.md`) — detailed explanation of all 5 core routines: what they do, why they matter, and how they form the daily loop
+- **Memory Lint promoted to core** — moved from `ADWs/routines/custom/` to `ADWs/routines/`, hardcoded in `scheduler.py` (Sunday 09:00). Now 5 core routines instead of 4
+- **Release skill** now syncs screenshots (`public/print-*.png` → `site/public/assets/`) on every release
+
+### Changed
+- **Dashboard pages redesigned** — 12 pages (Audit, Config, Costs, Files, Integrations, Memory, Reports, Roles, Routines, Scheduler, Skills, Systems, Templates, Users) with consistent dark theme and improved UX
+- **Integration count** — 19 → 17 (removed internal-only Licensing and WhatsApp docs from public documentation)
+- **Memory system** — LLM Wiki pattern: ingest propagation, weekly lint, centralized index, and operation log
+
+### Removed
+- **`docs/integrations/licensing.md`** — internal only, not public
+- **`docs/integrations/whatsapp.md`** — internal only, not public
+
+### Fixed
+- **Dashboard build** — removed unused `totalTokens` variable in Costs page that blocked TypeScript compilation
+
 ## [0.6.0] - 2026-04-09
 
 ### Added
@@ -16,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`.env.example`** — added `EVOLUTION_API_URL/KEY`, `EVOLUTION_GO_URL/KEY`, `EVO_CRM_URL/TOKEN`
 
 ### Changed
-- **Integration count** — 16 → 19 across README, site, and docs
+- **Integration count** — 16 → 17 across README, site, and docs (removed internal-only Licensing and WhatsApp docs)
 - **Community members** — 7,000+ → 17,000+ on site
 - **v0.4 roadmap complete** — all 13 items done, Evolution product skills was the last one
 

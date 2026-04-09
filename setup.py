@@ -208,13 +208,33 @@ def generate_claude_md(config: dict) -> str:
 
     return f"""# {config['workspace_name']} — Claude Context File
 
-Claude reads this file at the start of every session.
+Claude reads this file at the start of every session. It's your persistent memory.
+
+---
+
+## How This Workspace Works
+
+This workspace exists to produce things, not just store them. Everything here is oriented around a loop: **define a goal → break it into problems → solve those problems → deliver the output.**
+
+Claude's role is to keep {config['owner_name'].split()[0]} moving through this loop. If there's no goal yet, help define one. If there's a goal but no clear problems, help break it down. If there are problems, help solve the next one. Always push toward the next concrete thing to do or deliver.
+
+---
 
 ## Who I Am
 
 **Name:** {config['owner_name']}
 **Company:** {config['company_name']}
 **Timezone:** {config['timezone']}
+
+---
+
+## Active Projects
+
+| Name | What it is | Status |
+|------|---------|--------|
+| *(add your projects here)* | | |
+
+---
 
 ## Active Agents
 
@@ -227,16 +247,78 @@ See `.claude/skills/CLAUDE.md` for the complete index.
 
 ## What Claude Should Do
 
-- Always respond in **{config['language']}**.
-- Keep a professional, clear and well-organized tone.
-- Use the right agents for each domain (see agents table above).
+- **Always respond in {config['language']}.** This applies to every message, every session, without exception.
+- Maintain a professional, clear and well-organized tone.
+- Before working on any area, read the corresponding Overview file.
+- Outputs for each area go in the correct folder. If unsure, ask.
+- When creating files, prefix with [C] to indicate Claude created it.
+- Use the correct agents for each domain (see agents table above).
 - Use skills with the correct prefix (see `.claude/skills/CLAUDE.md`).
 
 ## What Claude Should NOT Do
 
-- Don't edit notes without asking permission. Only files with prefix [C] are free to edit.
-- Don't be verbose — be direct and concrete.
-- Don't create projects without first interviewing the user about the objective and context.
+- Do not edit notes without asking permission. Only files with [C] prefix are free to edit.
+- Do not be verbose — be direct and concrete.
+- Do not create projects without first interviewing the user about the objective and context.
+- Do not overwrite existing skills or templates without confirming.
+
+---
+
+## Memory (Hot Cache)
+
+### Me
+{config['owner_name']} — {config['company_name']}
+
+### People
+| Who | Role |
+|-----|------|
+| *(add key people here)* | |
+→ Full profiles: memory/people/
+
+### Terms
+| Term | Meaning |
+|------|---------|
+| *(add internal terms here)* | |
+→ Full glossary: memory/glossary.md
+
+### Preferences
+- Always respond in {config['language']}
+- Timezone: {config['timezone']}
+- Tone: professional and direct
+
+---
+
+## Memory System
+
+Two-tier memory following the **LLM Wiki pattern** (ingest → query → lint):
+
+- **CLAUDE.md** (this file) — Hot cache with key people, terms, projects (~90% of daily needs)
+- **memory/** — Deep storage with full profiles, glossary, project details, trends
+  - `index.md` — Centralized catalog of all memory files (auto-updated)
+  - `log.md` — Append-only chronological record of all memory operations
+  - `glossary.md` — Full decoder ring for internal language
+  - `people/` — Complete people profiles
+  - `projects/` — Project details and context
+  - `context/` — Company, teams, tools
+
+Three operations maintain the knowledge base:
+- **Ingest** (daily, memory-sync) — Extracts knowledge and propagates updates across related files
+- **Query** (conversations) — Complex syntheses filed back as new entries
+- **Lint** (weekly, memory-lint) — Detects contradictions, stale data, orphans, and gaps
+
+---
+
+## Detailed Configuration
+
+See `.claude/rules/` for detailed configuration (auto-loaded by Claude Code):
+- `agents.md` — specialized agents and how to use them
+- `integrations.md` — MCPs, APIs, GitHub repos, infra and templates
+- `routines.md` — daily, weekly and monthly scheduler routines
+- `skills.md` — skill categories and prefixes
+
+---
+
+*Claude updates this file as the workspace grows. You can also edit it at any time.*
 """
 
 

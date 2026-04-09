@@ -42,6 +42,9 @@ review:             ## 📋 Organize tasks in Todoist (@clawdia)
 memory:             ## 🧠 Consolidate memory (@clawdia)
 	$(PYTHON) $(ADW_DIR)/memory_sync.py
 
+memory-lint:        ## 🔍 Memory health check — contradictions, gaps, stale data (@clawdia)
+	$(PYTHON) $(ADW_DIR)/memory_lint.py
+
 eod:                ## 🌙 End of day consolidation — memory, logs, learnings (@clawdia)
 	$(PYTHON) $(ADW_DIR)/end_of_day.py
 
@@ -192,5 +195,5 @@ docker-build:       ## 🐳 Build the image
 help:               ## 📖 Show this help
 	@grep -E '^[a-zA-Z_-]+:.*##' Makefile | sort | awk 'BEGIN {FS = ":.*## "}; {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: morning sync triage review memory eod dashboard youtube instagram linkedin social fin-pulse licensing weekly health trends linear community community-week community-month github faq strategy fin-weekly licensing-weekly fin-close licensing-month daily scheduler social-auth telegram telegram-stop telegram-attach logs logs-detail logs-tail metrics clean-logs docker-dashboard docker-telegram docker-down docker-logs docker-run docker-build help
+.PHONY: morning sync triage review memory memory-lint eod dashboard youtube instagram linkedin social fin-pulse licensing weekly health trends linear community community-week community-month github faq strategy fin-weekly licensing-weekly fin-close licensing-month daily scheduler social-auth telegram telegram-stop telegram-attach logs logs-detail logs-tail metrics clean-logs docker-dashboard docker-telegram docker-down docker-logs docker-run docker-build help
 .DEFAULT_GOAL := help

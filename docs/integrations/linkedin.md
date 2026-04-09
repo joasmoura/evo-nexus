@@ -10,6 +10,9 @@ LinkedIn API provides profile information and organization statistics. The @pixe
 2. Create a new app
 3. Navigate to **Auth** tab
 4. Copy your **Client ID** and **Client Secret**
+5. Under **Authorized redirect URLs**, add:
+   - `http://localhost:8765/callback/linkedin`
+   - If using ngrok, also add your ngrok URL: `https://your-id.ngrok.io/callback/linkedin`
 
 ### 2. Configure .env
 

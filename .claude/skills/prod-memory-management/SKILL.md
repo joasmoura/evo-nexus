@@ -29,10 +29,13 @@ Without memory, that request is meaningless. With memory, Claude knows:
 ```
 CLAUDE.md          ← Hot cache (~30 people, common terms)
 memory/
+  index.md         ← Catálogo centralizado por categoria (auto-updated)
+  log.md           ← Registro cronológico de operações (append-only)
   glossary.md      ← Full decoder ring (everything)
   people/          ← Complete profiles
   projects/        ← Project details
   context/         ← Company, teams, tools
+  trends/          ← Weekly metric snapshots (JSON)
 ```
 
 **CLAUDE.md (Hot Cache):**
@@ -321,3 +324,27 @@ Use `/productivity:start` to initialize by scanning your chat, calendar, email, 
 - Term rarely used
 
 This keeps CLAUDE.md fresh and relevant.
+
+## Operations (LLM Wiki Pattern)
+
+Three core operations maintain the knowledge base:
+
+### Ingest (via memory-sync, daily 21:15)
+When new information arrives, it's not just saved — it's **propagated**:
+- New info about a person → update their people/ file AND any projects/ that mention them
+- New project detail → update glossary.md codename entry + CLAUDE.md if active
+- Role change → update people/, glossary.md, and CLAUDE.md hot cache
+- After any change → update index.md catalog + append to log.md
+
+### Query (during conversations)
+When synthesizing a complex answer, the valuable result can be filed back as a new memory entry — knowledge compounds through use, not just accumulation.
+
+### Lint (via memory-lint, weekly Sunday 09:00)
+Periodic health check that detects:
+- **Contradictions** — mismatches between CLAUDE.md hot cache and memory/ deep storage
+- **Stale claims** — dates older than 60 days, closed Linear issues still listed as open
+- **Orphan files** — files in memory/ not listed in index.md
+- **Coverage gaps** — active projects/people in CLAUDE.md without memory/ files
+- **Missing cross-references** — people in projects without people/ files, and vice versa
+
+Fixes what it can automatically, flags the rest for manual review.

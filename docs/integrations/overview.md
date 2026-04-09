@@ -35,8 +35,6 @@ Direct HTTP calls to service APIs, executed by skills and routines via Python sc
 | YouTube | @pixel | `int-youtube`, `social-youtube-report` |
 | Instagram | @pixel | `int-instagram`, `social-instagram-report` |
 | LinkedIn | @pixel | `int-linkedin`, `social-linkedin-report` |
-| WhatsApp | @pulse | `int-whatsapp`, `pulse-daily` |
-| Licensing | @atlas | `int-licensing`, `prod-licensing-daily` |
 | Evolution API | @pulse | `int-evolution-api`, `pulse-daily` |
 | Evolution Go | @pulse | `int-evolution-go`, `pulse-daily` |
 | Evo CRM | @nex | `int-evo-crm` |
@@ -107,7 +105,6 @@ See individual integration guides for setup steps:
 
 **Messaging:**
 - [Telegram](telegram.md) -- Bot messaging and notifications via MCP
-- [WhatsApp](whatsapp.md) -- Group messages via Evolution Foundation API
 - [Discord](discord.md) -- Community channels and messages
 
 **Social Media:**
@@ -118,8 +115,6 @@ See individual integration guides for setup steps:
 **Development:**
 - [GitHub](github.md) -- PRs, issues, releases via MCP + CLI
 - [Linear](linear.md) -- Issues, sprints, project tracking via MCP
-- [Licensing](licensing.md) -- Open source telemetry and growth metrics
-
 **Productivity:**
 - [Google Calendar + Gmail](google.md) -- Agenda, scheduling, email triage
 - [Obsidian](obsidian.md) -- Vault management, notes, search via CLI
