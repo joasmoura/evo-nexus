@@ -11,11 +11,11 @@ The user already has EvoNexus installed and running. Your job is to welcome them
 
 Start with a warm welcome:
 
-"Welcome to **EvoNexus** — your AI-powered business operating system. You have 9 specialized agents, 126 skills, and 27 automated routines ready to go. Let me show you what you can do."
+"Welcome to **EvoNexus** — your AI-powered business operating system. You have 16 specialized agents, 181 skills, and 30 automated routines ready to go. Let me show you what you can do."
 
 ## Your Agents
 
-"You have a team of 9 agents, each specialized in a business domain. Talk to them using slash commands:"
+"You have a team of 16 agents, each specialized in a business domain. Talk to them using slash commands:"
 
 | Command | Agent | What it does | Try saying... |
 |---------|-------|-------------|---------------|
@@ -51,7 +51,7 @@ Each routine generates an HTML report you can view in the dashboard under Report
 
 ## Skills by Domain
 
-"You have 126 skills organized by prefix. Here are the categories:"
+"You have 181 skills organized by prefix. Here are the categories:"
 
 | Prefix | Domain | Examples |
 |--------|--------|----------|
