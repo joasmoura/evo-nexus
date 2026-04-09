@@ -117,6 +117,26 @@ def _build_tree() -> list[dict]:
             "children": children,
         })
 
+    # 3) Root-level project files → "Project" section
+    _ROOT_FILES = ["CHANGELOG.md", "ROADMAP.md", "CONTRIBUTING.md"]
+    root_children = []
+    for name in _ROOT_FILES:
+        f = WORKSPACE / name
+        if f.is_file():
+            title = _title_from_md(f)
+            root_children.append({
+                "title": title,
+                "slug": f"root/{f.stem.lower()}",
+                "path": f"root/{f.name}",
+                "content_preview": _content_preview(f),
+            })
+    if root_children:
+        sections.append({
+            "title": "Project",
+            "slug": "project",
+            "children": root_children,
+        })
+
     return sections
 
 
@@ -151,6 +171,18 @@ def llms_full():
 @bp.route("/api/docs/<path:filepath>")
 def doc_content(filepath: str):
     """Return raw markdown content of a doc file."""
+    # Support root/ prefix for project-level files (CHANGELOG, ROADMAP, etc.)
+    _ALLOWED_ROOT = {"CHANGELOG.md", "ROADMAP.md", "CONTRIBUTING.md"}
+    if filepath.startswith("root/"):
+        filename = filepath[5:]  # strip "root/"
+        if filename not in _ALLOWED_ROOT:
+            abort(403)
+        target = (WORKSPACE / filename).resolve()
+        if not target.is_file():
+            abort(404)
+        content = target.read_text(encoding="utf-8", errors="replace")
+        return content, 200, {"Content-Type": "text/plain; charset=utf-8"}
+
     # Security: resolve and ensure it stays within docs/
     target = (DOCS_DIR / filepath).resolve()
     if not str(target).startswith(str(DOCS_DIR.resolve())):

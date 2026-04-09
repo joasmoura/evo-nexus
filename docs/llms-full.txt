@@ -504,6 +504,112 @@ Both require authentication and `config:manage` permission.
 
 ---
 
+# Knowledge Base (MemPalace)
+
+The Knowledge Base page provides semantic search over your code, documentation, and project knowledge. It is powered by **[MemPalace](https://github.com/milla-jovovich/mempalace)**, an open-source local memory system that indexes content into a searchable vector database.
+
+> **GitHub:** [github.com/milla-jovovich/mempalace](https://github.com/milla-jovovich/mempalace) — MIT License, 27k+ stars
+
+Everything runs locally — no external APIs, no data leaves your machine.
+
+## Enabling MemPalace
+
+MemPalace is an **optional** feature. When you first visit the Knowledge Base page, you'll see an "Enable MemPalace" button.
+
+1. Go to **Dashboard > Knowledge**
+2. Click **Install MemPalace**
+3. Wait for the installation to complete (installs via pip)
+
+**Requirements:** Python 3.9+
+
+The installation adds the `mempalace` package and its dependency `chromadb` (the vector database engine).
+
+## How It Works
+
+MemPalace organizes knowledge using a "memory palace" metaphor:
+
+| Concept | Description |
+|---------|-------------|
+| **Wing** | A project or top-level category (e.g., `evo-ai`, `docs`) |
+| **Room** | A topic within a wing (e.g., `technical`, `architecture`, `decisions`) |
+| **Drawer** | A chunk of content (~800 characters) stored with metadata |
+
+When you index a directory, MemPalace:
+
+1. Scans all files (respecting `.gitignore`)
+2. Splits content into chunks of ~800 characters
+3. Classifies each chunk into a room based on content and file path
+4. Stores vector embeddings in ChromaDB for semantic search
+
+All data is stored locally at `dashboard/data/mempalace/`.
+
+## Adding Sources
+
+Sources are directories you want to index — project code, documentation folders, etc.
+
+1. Go to the **Sources** tab
+2. Enter the **directory path** (absolute path on your machine)
+3. Optionally set a **label** (display name) and **wing override** (custom project name)
+4. Click **Add**
+
+MemPalace only re-processes files that have changed since the last indexing, so re-indexing is fast.
+
+## Indexing (Mining)
+
+After adding sources, click the **Play** button next to a source to index it, or use **Index All** to process everything.
+
+Mining runs in the background — you can navigate away and check progress on the **Status** tab. The status indicator shows when mining is active.
+
+## Searching
+
+The **Search** tab provides semantic search across all indexed content:
+
+1. Type your query in natural language (e.g., "how does authentication work")
+2. Optionally filter by **wing** (project) or **room** (category)
+3. Press Enter or click **Search**
+
+Results show:
+- The matched content snippet
+- Source file path
+- Similarity score (higher = more relevant)
+- Wing and room tags
+
+Semantic search finds results by meaning, not just keyword matching. For example, searching "auth" will also find content about "login", "session tokens", and "JWT".
+
+## Permissions
+
+| Permission | Who has it | What it allows |
+|------------|-----------|----------------|
+| `mempalace:view` | admin, operator, viewer | View status, sources, and search |
+| `mempalace:manage` | admin | Install, add/remove sources, run indexing |
+
+## API Endpoints
+
+All endpoints require authentication and appropriate permissions.
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/mempalace/status` | Installation status, palace stats, mining status |
+| `POST` | `/api/mempalace/install` | Install MemPalace package |
+| `GET` | `/api/mempalace/sources` | List configured sources |
+| `POST` | `/api/mempalace/sources` | Add a new source directory |
+| `DELETE` | `/api/mempalace/sources/:idx` | Remove a source by index |
+| `POST` | `/api/mempalace/mine` | Start indexing (background process) |
+| `GET` | `/api/mempalace/search?q=...` | Semantic search with optional `wing`, `room`, `n` filters |
+
+## MCP Integration
+
+For advanced users, MemPalace can also be registered as an MCP server for direct Claude Code access:
+
+```bash
+claude mcp add mempalace -- python -m mempalace.mcp_server --palace dashboard/data/mempalace
+```
+
+This enables Claude to query your knowledge base directly during conversations.
+
+
+---
+
 # Dashboard Overview
 
 The OpenClaude web dashboard is a React + Flask application that gives you a visual interface to manage agents, routines, integrations, memory, and more.
@@ -602,6 +708,10 @@ Browse the two-tier memory system:
 - **CLAUDE.md** -- working memory, loaded every session
 - **memory/** -- detailed files (people, projects, glossary, trends)
 - **Agent memory** -- per-agent context in `.claude/agent-memory/`
+
+### Knowledge Base
+
+Optional semantic search powered by [MemPalace](https://github.com/milla-jovovich/mempalace). Enable it with one click, add directories (code, docs, notes) as sources, index them, and search by meaning -- not just keywords. Everything runs locally using ChromaDB vectors. See [knowledge-base.md](knowledge-base.md) for details.
 
 ### Integrations
 
@@ -2130,6 +2240,8 @@ Claude uses the `int-stripe` skill to call the Stripe API and return formatted r
 
 # What is OpenClaude
 
+> **Note:** OpenClaude is an independent, **unofficial open-source project**. It is **not affiliated with, endorsed by, or sponsored by Anthropic**. "Claude" and "Claude Code" are trademarks of Anthropic, PBC. This project integrates with Claude Code as a third-party tool and requires users to provide their own installation and credentials.
+
 ## The Problem
 
 Running a business means juggling dozens of tools, dashboards, and communication channels every day. Email, calendar, project management, financial tracking, community moderation, social media — each one demands attention, and none of them talk to each other.
@@ -2138,7 +2250,7 @@ Most "AI assistants" are chatbots. You ask a question, you get an answer, and th
 
 ## What OpenClaude Is
 
-OpenClaude is a multi-agent workspace built on top of [Claude Code](https://code.claude.com/docs/overview). It turns a single Claude Code installation into a team of specialized agents that handle real operational work — not just answer questions.
+OpenClaude is a multi-agent workspace compatible with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and other LLM tooling. It turns a single Claude Code installation into a team of specialized agents that handle real operational work — not just answer questions.
 
 Each agent owns a domain (finance, projects, community, social media, strategy, sales, courses, personal wellness) and has the skills, memory, and integrations needed to operate independently. A scheduler runs routines on a daily, weekly, and monthly cadence, producing real outputs: HTML reports, triaged inboxes, synced meeting notes, financial snapshots, community health checks.
 
@@ -2194,13 +2306,17 @@ A web UI (React + Flask) for managing everything: view reports, start/stop servi
 
 ![Web Dashboard](imgs/doc-overview.png)
 
+### Knowledge Base
+
+Optional semantic search powered by [MemPalace](https://github.com/milla-jovovich/mempalace). Index your project code, documentation, and knowledge for natural-language search — everything runs locally with ChromaDB. Enable it with one click in the Dashboard.
+
 ### Memory
 
 Two-tier persistence. `CLAUDE.md` holds working memory (who you are, active projects, key people). The `memory/` directory stores deeper context (people profiles, glossary, project history). Both survive across sessions.
 
 ## Open Source
 
-OpenClaude is MIT-licensed, built by [Evolution Foundation](https://evolutionfoundation.com.br). The source is at [github.com/EvolutionAPI/open-claude](https://github.com/EvolutionAPI/open-claude).
+OpenClaude is MIT-licensed, built by [Evolution Foundation](https://evolutionfoundation.com.br). The source is at [github.com/EvolutionAPI/open-claude](https://github.com/EvolutionAPI/open-claude). This is an unofficial community project — not affiliated with or endorsed by Anthropic.
 
 It's designed to be forked and adapted. Add your own agents, skills, routines, and integrations. The architecture is markdown-first — no complex plugin systems, just files that Claude Code reads.
 
