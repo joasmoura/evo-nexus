@@ -1,10 +1,10 @@
-"""OpenClaude Licensing — direct registration, activation, heartbeat, shutdown.
+"""OpenClaude Licensing — register-only, no heartbeat or monitoring.
 
-Follows the Evolution Licensing Server protocol:
+Privacy-first: only records who installed. No continuous monitoring.
+
+Protocol:
   POST /v1/register/direct  — register with email/name, receive api_key
   POST /v1/activate         — validate existing api_key on startup
-  POST /v1/heartbeat        — periodic ping with telemetry
-  POST /v1/deactivate       — mark instance as offline on shutdown
   GET  /api/geo             — geo-lookup from client IP
 """
 
@@ -12,8 +12,6 @@ import hashlib
 import hmac as hmac_mod
 import socket
 import uuid
-import time
-import threading
 import logging
 from datetime import datetime, timezone
 
@@ -23,10 +21,24 @@ logger = logging.getLogger("licensing")
 
 LICENSING_SERVER = "https://license.evolutionfoundation.com.br"
 PRODUCT = "open-claude"
-VERSION = "0.1.0"
 TIER = "open-claude"
-HEARTBEAT_INTERVAL = 300  # 5 minutes (matching Ruby impl)
 TIMEOUT = 10
+
+
+def _get_version() -> str:
+    """Read version from pyproject.toml."""
+    try:
+        from pathlib import Path
+        pyproject = Path(__file__).resolve().parent.parent.parent / "pyproject.toml"
+        for line in pyproject.read_text().splitlines():
+            if line.startswith("version"):
+                return line.split('"')[1]
+    except Exception:
+        pass
+    return "unknown"
+
+
+VERSION = _get_version()
 
 
 # ── Instance ID (hardware-based) ─────────────
@@ -152,38 +164,6 @@ def activate(instance_id: str, api_key: str) -> bool:
         return False
 
 
-# ── Heartbeat ────────────────────────────────
-
-def heartbeat(instance_id: str, api_key: str, stats: dict | None = None) -> dict:
-    """Periodic heartbeat. Returns server response."""
-    payload = {
-        "instance_id": instance_id,
-        "version": VERSION,
-        "messages_sent": 0,
-    }
-    if stats:
-        payload.update(stats)
-
-    try:
-        return _post("/v1/heartbeat", payload, api_key=api_key)
-    except Exception:
-        return {}
-
-
-# ── Deactivation (shutdown) ──────────────────
-
-def deactivate(instance_id: str) -> bool:
-    """Mark instance as offline on the licensing server."""
-    try:
-        _post("/v1/deactivate", {
-            "instance_id": instance_id,
-            "version": VERSION,
-        })
-        return True
-    except Exception:
-        return False
-
-
 # ── Runtime Context (in-memory state) ────────
 
 class RuntimeContext:
@@ -193,19 +173,10 @@ class RuntimeContext:
         self.instance_id: str | None = None
         self.api_key: str | None = None
         self.tier: str = TIER
-        self._active = threading.Event()
 
     @property
     def active(self) -> bool:
-        return self._active.is_set()
-
-    def activate(self, api_key: str, instance_id: str):
-        self.api_key = api_key
-        self.instance_id = instance_id
-        self._active.set()
-
-    def deactivate_ctx(self):
-        self._active.clear()
+        return self.api_key is not None
 
 
 # Global singleton
@@ -219,7 +190,7 @@ def get_context() -> RuntimeContext:
 # ── Setup (orchestrates direct registration) ─
 
 def setup_perform(email: str, name: str, client_ip: str | None = None):
-    """Full setup flow: geo lookup → direct register → save → activate → heartbeat."""
+    """Full setup flow: geo lookup → direct register → save."""
     ctx = get_context()
 
     # 1. Load or create instance_id
@@ -242,10 +213,9 @@ def setup_perform(email: str, name: str, client_ip: str | None = None):
         )
     except Exception as e:
         logger.warning(f"License registration failed (non-blocking): {e}")
-        # Save instance_id at minimum
         set_runtime_config("version", VERSION)
         set_runtime_config("tier", TIER)
-        set_runtime_config("activated_at", datetime.now(timezone.utc).isoformat())
+        set_runtime_config("registered_at", datetime.now(timezone.utc).isoformat())
         return
 
     # 4. Save to DB
@@ -256,64 +226,31 @@ def setup_perform(email: str, name: str, client_ip: str | None = None):
     if result.get("customer_id"):
         set_runtime_config("customer_id", str(result["customer_id"]))
     set_runtime_config("version", VERSION)
-    set_runtime_config("activated_at", datetime.now(timezone.utc).isoformat())
+    set_runtime_config("registered_at", datetime.now(timezone.utc).isoformat())
 
-    # 5. Activate in memory
+    # 5. Set context
     if api_key:
-        ctx.activate(api_key=api_key, instance_id=instance_id)
-        logger.info(f"License activated: {instance_id[:8]}...")
+        ctx.api_key = api_key
+        ctx.instance_id = instance_id
+        logger.info(f"License registered: {instance_id[:8]}...")
 
 
 # ── Initialize Runtime (startup) ─────────────
 
 def initialize_runtime():
-    """Called on app startup. Tries to load and validate existing license."""
+    """Called on app startup. Loads existing license if present."""
     ctx = get_context()
 
-    # 1. Load or create instance_id
     instance_id = get_runtime_config("instance_id")
     if not instance_id:
         instance_id = generate_instance_id()
         set_runtime_config("instance_id", instance_id)
 
     ctx.instance_id = instance_id
-
-    # 2. Try to load existing api_key
     api_key = get_runtime_config("api_key")
-    if not api_key:
-        logger.info("No license found — waiting for setup/login to register")
-        return
-
-    # 3. Validate with licensing server (POST /v1/activate)
-    if activate(instance_id, api_key):
-        ctx.activate(api_key=api_key, instance_id=instance_id)
-        logger.info(f"License validated on startup: {instance_id[:8]}...")
-    else:
-        logger.info("License validation failed — will retry on next login")
-        ctx.api_key = api_key  # Keep for retry
-
-
-# ── Attempt Setup (on login, if not active) ──
-
-def attempt_setup_on_login(email: str, name: str, client_ip: str | None = None):
-    """Called on user login. If license not active, tries to register/reactivate."""
-    ctx = get_context()
-
-    # Already active? Nothing to do.
-    if ctx.active:
-        return
-
-    instance_id = ctx.instance_id or get_runtime_config("instance_id")
-    api_key = ctx.api_key or get_runtime_config("api_key")
-
-    # Try reactivation with existing api_key
-    if api_key and instance_id:
-        if activate(instance_id, api_key):
-            ctx.activate(api_key=api_key, instance_id=instance_id)
-            return
-
-    # Last resort: direct register
-    setup_perform(email=email, name=name, client_ip=client_ip)
+    if api_key:
+        ctx.api_key = api_key
+        logger.info(f"License loaded: {instance_id[:8]}...")
 
 
 # ── Auto-register for existing installs ──────
@@ -324,21 +261,18 @@ def auto_register_if_needed():
         instance_id = get_runtime_config("instance_id")
         api_key = get_runtime_config("api_key")
 
-        # Already has api_key → just initialize
         if api_key:
             initialize_runtime()
             return
 
         from models import User
         if User.query.count() == 0:
-            return  # No setup yet
+            return
 
-        # Has users but no api_key → register with admin data
         admin = User.query.filter_by(role="admin").first()
         if not admin:
             return
 
-        # Ensure instance_id
         if not instance_id:
             instance_id = generate_instance_id()
             set_runtime_config("instance_id", instance_id)
@@ -351,64 +285,15 @@ def auto_register_if_needed():
         logger.debug(f"Auto-register skipped: {e}")
 
 
-# ── Heartbeat Thread ─────────────────────────
-
-_heartbeat_thread = None
-_start_time = time.time()
-
-
-def start_heartbeat(app):
-    """Start background heartbeat thread."""
-    global _heartbeat_thread
-
-    def _run():
-        while True:
-            time.sleep(HEARTBEAT_INTERVAL)
-            try:
-                with app.app_context():
-                    ctx = get_context()
-                    if not ctx.active or not ctx.api_key or not ctx.instance_id:
-                        continue
-
-                    from models import User
-                    result = heartbeat(ctx.instance_id, ctx.api_key, {
-                        "uptime_seconds": int(time.time() - _start_time),
-                        "user_count": User.query.count(),
-                    })
-
-                    if result.get("status") == "revoked":
-                        ctx.deactivate_ctx()
-                        set_runtime_config("tier", "revoked")
-                        logger.warning("License revoked by server")
-            except Exception:
-                pass
-
-    _heartbeat_thread = threading.Thread(target=_run, daemon=True, name="licensing-heartbeat")
-    _heartbeat_thread.start()
-
-
-# ── Shutdown Hook ────────────────────────────
-
-def on_shutdown(app):
-    """Deactivate instance on server shutdown."""
-    try:
-        with app.app_context():
-            ctx = get_context()
-            if ctx.instance_id:
-                deactivate(ctx.instance_id)
-    except Exception:
-        pass
-
-
 # ── License Status (for dashboard) ───────────
 
 def get_license_status() -> dict:
     ctx = get_context()
     return {
-        "active": ctx.active,
+        "registered": ctx.api_key is not None,
         "instance_id": ctx.instance_id or get_runtime_config("instance_id"),
         "tier": get_runtime_config("tier") or TIER,
         "version": VERSION,
-        "activated_at": get_runtime_config("activated_at"),
+        "registered_at": get_runtime_config("registered_at"),
         "product": PRODUCT,
     }
