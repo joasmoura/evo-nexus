@@ -228,6 +228,24 @@ def seed_roles():
     db.session.commit()
 
 
+def seed_systems():
+    """Create default systems if they don't exist."""
+    defaults = [
+        {
+            "name": "Claude Status",
+            "description": "Anthropic Claude platform status and incident history",
+            "url": "https://status.anthropic.com",
+            "icon": "📊",
+            "type": "external",
+        },
+    ]
+    for item in defaults:
+        existing = System.query.filter_by(name=item["name"]).first()
+        if not existing:
+            db.session.add(System(**item))
+    db.session.commit()
+
+
 def get_role_permissions(role_name: str) -> dict:
     """Get permissions for a role from DB, fallback to builtin defaults."""
     role = Role.query.filter_by(name=role_name).first()

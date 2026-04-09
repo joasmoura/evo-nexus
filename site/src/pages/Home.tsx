@@ -15,7 +15,7 @@ import {
 
 import MainLogo from "@assets/logo.png";
 import printOverview from "@assets/print-overview.png";
-import printChat from "@assets/print-chat.png";
+import printAgents from "@assets/print-agents.png";
 import printIntegrations from "@assets/print-integrations.png";
 import printCosts from "@assets/print-costs.png";
 
@@ -246,7 +246,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 { title: "Overview Dashboard", img: printOverview },
-                { title: "Chat Terminal", img: printChat },
+                { title: "Multi Agents", img: printAgents },
                 { title: "Integrations", img: printIntegrations },
                 { title: "Cost Tracking", img: printCosts },
               ].map((item, i) => (

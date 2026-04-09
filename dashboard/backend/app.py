@@ -40,7 +40,7 @@ app.config["REMEMBER_COOKIE_DURATION"] = timedelta(days=30)
 CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
 
 # --------------- Database ---------------
-from models import db, User, needs_setup, seed_roles
+from models import db, User, needs_setup, seed_roles, seed_systems
 db.init_app(app)
 
 # Create tables on first run + enable WAL mode for concurrent reads
@@ -49,6 +49,7 @@ with app.app_context():
     db.session.execute(db.text("PRAGMA journal_mode=WAL"))
     db.session.commit()
     seed_roles()
+    seed_systems()
 
 # --------------- Licensing (register-only, no heartbeat) ───
 from licensing import auto_register_if_needed
@@ -76,6 +77,7 @@ PUBLIC_PATHS = {
     "/api/config/workspace-status",
     "/api/version",
     "/api/version/check",
+    "/api/agents/active",
 }
 
 @app.before_request
@@ -176,6 +178,31 @@ def _get_local_version():
 def api_version():
     """Return current version from pyproject.toml."""
     return {"version": _get_local_version()}
+
+
+@app.route("/api/agents/active")
+def api_agents_active():
+    """Return currently active agents from hook-generated status file."""
+    import json
+    status_file = WORKSPACE / ".claude" / "agent-status.json"
+    try:
+        if status_file.is_file():
+            data = json.loads(status_file.read_text())
+            # Filter entries older than 10 minutes (stale)
+            from datetime import datetime, timezone, timedelta
+            cutoff = datetime.now(timezone.utc) - timedelta(minutes=10)
+            active = []
+            for entry in data.get("active_agents", []):
+                try:
+                    started = datetime.fromisoformat(entry["started_at"].replace("Z", "+00:00"))
+                    if started > cutoff:
+                        active.append(entry)
+                except (KeyError, ValueError):
+                    pass
+            return {"active_agents": active, "last_updated": data.get("last_updated")}
+    except Exception:
+        pass
+    return {"active_agents": [], "last_updated": None}
 
 
 # --- Version check with 1h cache ---

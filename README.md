@@ -60,7 +60,7 @@ It turns a single Claude Code installation into a team of 9 specialized agents â
 
 | Overview | Chat |
 |---|---|
-| ![Overview](public/print-overview.png) | ![Chat](public/print-chat.png) |
+| ![Overview](public/print-overview.png) | ![Chat](public/print-agents.png) |
 | **Integrations** | **Costs** |
 | ![Integrations](public/print-integrations.png) | ![Costs](public/print-costs.png) |
 

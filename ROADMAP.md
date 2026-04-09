@@ -32,11 +32,20 @@
 - [x] 🔥 **CLI installer** — `npx @evoapi/open-claude` — clones repo, installs deps, runs interactive setup wizard.
 - [x] **Full Docker install** — `docker compose up dashboard` with multi-stage Dockerfile + GitHub Actions CI pushing to GHCR.
 - [x] **Update checker** — dashboard checks GitHub releases and shows upgrade notification.
+- [x] **settings.json** — project-level permissions (allow/deny), hooks configuration, thinking mode enabled.
+- [x] **CLAUDE.md split** — reduced from 263 to 128 lines. Detailed config moved to `.claude/rules/` (agents, integrations, routines, skills).
+- [x] **Inner-loop commands** — `/status` (workspace status) and `/review` (recent changes + next actions).
 
 ### Dashboard UX
 
 - [x] **Sidebar reorganization** — 5 collapsible groups (Main, Operations, Data, System, Admin) with localStorage persistence.
-- [ ] **Active agent visualization** — use Claude Code hooks to display running agents in real-time (polished UI for demos).
+- [x] **Active agent visualization** — Claude Code hooks track agent launches via `PreToolUse` events, writing to `agent-status.json`. Dashboard polls `/api/agents/active` and shows "RUNNING" badges with pulse animation on agent cards and overview.
+- [x] **Agents page redesign** — unique icons and accent colors per agent, status dots, slash command badges, memory count pills, hover glow effects.
+- [x] **Overview page redesign** — stat cards with icons and trend indicators, active agents bar, quick actions row, improved reports and routines tables.
+
+### Agent Generalization
+
+- [x] **Agent prompts generalized** — all 9 agent prompts cleaned of hardcoded personal references. User-specific context preserved in `_improvements.md` per agent memory folder.
 
 ---
 
@@ -46,16 +55,7 @@
 
 ### Agent System
 
-- [ ] 🔥 **Complete existing agents** — ensure all 9 core agents have consistent memory, skills, and routines:
-  - [ ] **Clawdia (Ops)** — generalize personal references, generic usage docs
-  - [ ] **Flux (Finance)** — adapter pattern for ERPs beyond Omie
-  - [ ] **Atlas (Projects)** — generic sprint templates (not hardcoded to Linear/GitHub)
-  - [ ] **Pulse (Community)** — adapter for platforms beyond Discord/WhatsApp
-  - [ ] **Pixel (Social)** — native scheduling, post approval workflow
-  - [ ] **Sage (Strategy)** — scenario planning, board reporting, business canvas
-  - [ ] **Nex (Sales)** — structured funnel, forecasting, automated follow-ups, CRM adapter
-  - [ ] **Mentor (Courses)** — real platform, module generation, student tracking
-  - [ ] **Kai (Personal)** — generalize (remove hardcoded personal data)
+- [x] 🔥 **Generalize existing agents** — all 9 agent prompts generalized. User-specific context preserved in `_improvements.md` per agent memory folder. Adapter patterns documented as future work.
 - [ ] 🔥 **New business agents** — expand functional coverage:
   - [ ] **Marketing Agent** — orchestrate existing `mkt-*` skills, attribution, budget, full funnel
   - [ ] **HR / People Agent** — onboarding, 1:1s, performance reviews, hiring pipeline

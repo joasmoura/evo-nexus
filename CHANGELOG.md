@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-04-09
+
+### Added
+- **Active agent visualization** — Claude Code hooks (`PreToolUse`, `Stop`) track agent launches in `agent-status.json`. Dashboard polls `/api/agents/active` and shows animated "RUNNING" badges on agent cards and overview.
+- **Agents page redesign** — unique icons and accent colors per agent, slash command badges, memory count pills, status dots, hover glow effects.
+- **Overview page redesign** — stat cards with icons and trend indicators, active agents bar, quick actions row (Morning Briefing, Chat, Costs, GitHub), improved reports and routines tables with relative timestamps.
+- **Claude Code hooks** — `agent-tracker.sh` hook registered in `settings.json` for real-time agent activity tracking.
+- **Project settings.json** — permissions (allow/deny rules), hooks configuration.
+- **Inner-loop commands** — `/status` (workspace status) and `/review` (recent changes + next actions).
+- **Default system: Claude Status** — `seed_systems()` creates Anthropic status page as default external system on first boot.
+- **Public roadmap** — `ROADMAP.md` with community input via GitHub discussions.
+
+### Changed
+- **CLAUDE.md split** — reduced from 263 to 128 lines. Detailed config moved to `.claude/rules/` (agents, integrations, routines, skills) — auto-loaded by Claude Code.
+- **All 9 agent prompts generalized** — removed hardcoded personal references (Omie, Linear, Discord Evolution, Brazilian formats, etc.). User-specific context preserved in `_improvements.md` per agent memory folder.
+- **Rules and commands translated** — all `.claude/rules/` and `.claude/commands/` files translated from Portuguese to English.
+
 ## [0.4.1] - 2026-04-09
 
 ### Added
