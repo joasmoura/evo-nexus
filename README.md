@@ -353,9 +353,18 @@ make help            # List all available commands
 
 ---
 
+## Credits & Acknowledgments
+
+EvoNexus stands on the shoulders of great open source projects:
+
+- **[oh-my-claudecode](https://github.com/yeachan-heo/oh-my-claudecode)** by **Yeachan Heo** (MIT) — the Engineering Layer (19 agents including `apex-architect`, `bolt-executor`, `lens-reviewer`, and `dev-*` skills) is derived from OMC v4.11.4. See [NOTICE.md](NOTICE.md) for the full list of derived components and modifications.
+
+---
+
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.
+Third-party attributions are documented in [NOTICE.md](NOTICE.md).
 
 ---
 
